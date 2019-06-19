@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "387128658856",
+    "firebase_url": "https://trashure-91fee.firebaseio.com",
+    "project_id": "trashure-91fee",
+    "storage_bucket": "trashure-91fee.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:387128658856:android:56eeb23c1c1c083e",
+        "android_client_info": {
+          "package_name": "com.example.trashure"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "387128658856-bd4c3j3toj7l1u8cu52tpap8qd8artev.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.trashure",
+            "certificate_hash": "4a4450c7a909405f2268f83b0ac446d6293ba433"
+          }
+        },
+        {
+          "client_id": "387128658856-2rol54vfrb91dba4pu8d52o8o2pq7ce5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBPWgwfhb_3yT85kvpUlICzei7ORaaCiA4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "387128658856-2rol54vfrb91dba4pu8d52o8o2pq7ce5.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
