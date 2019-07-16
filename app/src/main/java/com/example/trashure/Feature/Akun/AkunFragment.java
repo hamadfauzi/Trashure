@@ -33,7 +33,6 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class AkunFragment extends Fragment {
 
-    final EditAkunFragment editAkun = new EditAkunFragment();
     private ImageButton btnEdit;
     FirebaseAuth mAuth;
     DatabaseReference userRefs;

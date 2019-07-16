@@ -8,47 +8,48 @@
     android:orientation="vertical"
     tools:context=".Feature.Beranda.BerandaFragment">
 
-   <!--
-    <LinearLayout
+   <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-        <RelativeLayout
-            android:id="@+id/toolbar"
+        <android.support.v7.widget.Toolbar
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="23dp"
-            android:paddingLeft="8dp"
-            android:paddingRight="10dp">
-
-            <TextView
-                android:id="@+id/appName"
-                android:layout_width="wrap_content"
+            android:layout_height="match_parent">
+            <RelativeLayout
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/app_name"
-                android:textSize="28sp"
-                android:textColor="@color/colorText"
-                android:textStyle="bold"
-                />
+                android:layout_marginRight="20dp">
 
-            &lt;!&ndash;<ImageButton
-                android:id="@+id/bell"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bell_vector"
-                android:layout_centerVertical="true"
-                android:layout_toLeftOf="@+id/setting"
-                android:layout_marginRight="24dp"/>
-            <ImageButton
-                android:id="@+id/setting"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/setting_vector"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                />&ndash;&gt;
+                <TextView
+                    android:id="@+id/appName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/app_name"
+                    android:textSize="26sp"
+                    android:textColor="@color/colorText"
+                    android:textStyle="bold"
+                    />
 
-        </RelativeLayout>
+                <ImageButton
+                    android:id="@+id/notifikasi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bell_vector"
+                    android:layout_centerVertical="true"
+                    android:layout_toLeftOf="@+id/setting"
+                    android:layout_marginRight="24dp"/>
+                <ImageButton
+                    android:id="@+id/setting"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/setting_vector"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    />
+
+            </RelativeLayout>
+        </android.support.v7.widget.Toolbar>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -227,6 +228,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/list_setoran"
+            tools:itemCount=""
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         </android.support.v7.widget.RecyclerView>
