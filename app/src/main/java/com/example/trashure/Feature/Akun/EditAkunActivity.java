@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.trashure.Feature.Akun.AkunFragment;
+import com.example.trashure.Feature.Register.RegisterActivity;
 import com.example.trashure.MainActivity;
 import com.example.trashure.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -55,7 +57,6 @@ public class EditProfileActivity extends AppCompatActivity {
     private EditText et_nama,et_phonenumber,et_email,et_bod;
     private Toolbar toolbar;
     private Button btnSimpan;
-    private ImageButton btnBack;
     private int counterSimpan = 0;
     private String currentUID;
     private FirebaseAuth mAuth;
@@ -83,6 +84,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     public void initialize(){
+        akunFragment = new AkunFragment();
         mAuth = FirebaseAuth.getInstance();
         currentUID = mAuth.getCurrentUser().getUid();
         loadPict = FirebaseStorage.getInstance().getReference().child("DisplayPictures").child("Users");
@@ -92,7 +94,6 @@ public class EditProfileActivity extends AppCompatActivity {
         et_email = (EditText) findViewById(R.id.et_email);
         btnSimpan = (Button) findViewById(R.id.btn_simpan);
         tv_chooseImage = (TextView) findViewById(R.id.tv_choose_image);
-        btnBack = (ImageButton) findViewById(R.id.btn_back);
         toolbar = (Toolbar) findViewById(R.id.toolbar_edit_akun);
         et_bod = (EditText) findViewById(R.id.et_tanggal);
         mDialog = new ProgressDialog(this);
@@ -151,13 +152,6 @@ public class EditProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 new DatePickerDialog(EditProfileActivity.this,date,mCalendar.get(Calendar.YEAR),mCalendar.get(Calendar.MONTH),mCalendar.get(Calendar.DAY_OF_MONTH)).show();
-            }
-        });
-
-        btnBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onBackPressed();
             }
         });
         btnSimpan.setOnClickListener(new View.OnClickListener() {
