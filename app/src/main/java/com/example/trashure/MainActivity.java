@@ -1,5 +1,6 @@
 package com.example.trashure;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
@@ -21,10 +22,13 @@ import com.example.trashure.Feature.Scan.ScanFragment;
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
+    public static Context contextOfApplication;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        contextOfApplication = getApplicationContext();
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -73,5 +77,9 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameFragment,fragment);
         fragmentTransaction.commit();
+    }
+
+    public static Context getContextOfApplication() {
+        return contextOfApplication;
     }
 }

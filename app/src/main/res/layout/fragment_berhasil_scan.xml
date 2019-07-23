@@ -2,8 +2,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@android:color/white">
+    android:layout_height="match_parent">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,7 +28,7 @@
             android:id="@+id/info"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Terima kasih telah melakukan penukaran saldo"
+            android:text="Trashbag telah tersambung"
             android:layout_marginTop="28dp"
             android:textColor="@color/colorInputText"
             android:textSize="16sp"/>
@@ -38,7 +37,7 @@
             android:layout_marginTop="12dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sisa saldo anda Rp."
+            android:text="Trashbag ID"
             android:textColor="@color/colorInputText"
             android:textSize="16sp"/>
 

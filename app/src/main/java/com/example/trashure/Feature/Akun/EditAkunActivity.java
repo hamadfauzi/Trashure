@@ -1,4 +1,4 @@
-package com.example.trashure.Feature.EditProfile;
+package com.example.trashure.Feature.Akun;
 
 import android.app.DatePickerDialog;
 import android.app.ProgressDialog;
@@ -19,12 +19,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.trashure.Feature.Akun.AkunFragment;
-import com.example.trashure.Feature.Register.RegisterActivity;
 import com.example.trashure.MainActivity;
 import com.example.trashure.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -50,7 +47,7 @@ import java.util.HashMap;
 import java.util.Locale;
 import de.hdodenhof.circleimageview.CircleImageView;
 
-public class EditProfileActivity extends AppCompatActivity {
+public class EditAkunActivity extends AppCompatActivity {
 
     private CircleImageView civProfileImage;
     private AkunFragment akunFragment;
@@ -73,6 +70,8 @@ public class EditProfileActivity extends AppCompatActivity {
     private void setToolbar() {
         setSupportActionBar(toolbar);
         setTitle("");
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     @Override
@@ -80,7 +79,6 @@ public class EditProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_edit_akun);
         initialize();
-        setToolbar();
     }
 
     public void initialize(){
@@ -95,6 +93,13 @@ public class EditProfileActivity extends AppCompatActivity {
         btnSimpan = (Button) findViewById(R.id.btn_simpan);
         tv_chooseImage = (TextView) findViewById(R.id.tv_choose_image);
         toolbar = (Toolbar) findViewById(R.id.toolbar_edit_akun);
+        setToolbar();
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onBackPressed();
+            }
+        });
         et_bod = (EditText) findViewById(R.id.et_tanggal);
         mDialog = new ProgressDialog(this);
         akunFragment = new AkunFragment();
@@ -151,7 +156,7 @@ public class EditProfileActivity extends AppCompatActivity {
         et_bod.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DatePickerDialog(EditProfileActivity.this,date,mCalendar.get(Calendar.YEAR),mCalendar.get(Calendar.MONTH),mCalendar.get(Calendar.DAY_OF_MONTH)).show();
+                new DatePickerDialog(EditAkunActivity.this,date,mCalendar.get(Calendar.YEAR),mCalendar.get(Calendar.MONTH),mCalendar.get(Calendar.DAY_OF_MONTH)).show();
             }
         });
         btnSimpan.setOnClickListener(new View.OnClickListener() {
@@ -203,14 +208,14 @@ public class EditProfileActivity extends AppCompatActivity {
                         @Override
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                             progressDialog.dismiss();
-                            Toast.makeText(EditProfileActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditAkunActivity.this, "Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
                             progressDialog.dismiss();
-                            Toast.makeText(EditProfileActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                            Toast.makeText(EditAkunActivity.this, "Failed "+e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
@@ -308,12 +313,12 @@ public class EditProfileActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task task) {
                                 if(task.isSuccessful())
                                 {
-                                    Toast.makeText(EditProfileActivity.this, "Edit Berhasil", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(EditAkunActivity.this, "Edit Berhasil", Toast.LENGTH_SHORT).show();
                                     mDialog.dismiss();
                                 }
                                 else
                                 {
-                                    Toast.makeText(EditProfileActivity.this, "Error : "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(EditAkunActivity.this, "Error : "+task.getException().getMessage(), Toast.LENGTH_SHORT).show();
                                     mDialog.dismiss();
                                 }
                             }
@@ -337,7 +342,7 @@ public class EditProfileActivity extends AppCompatActivity {
 
     public void backButtonHandler() {
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-                EditProfileActivity.this);
+                EditAkunActivity.this);
         // Setting Dialog Title
         alertDialog.setTitle("Konfirmasi Kembali");
         // Setting Dialog Message
@@ -348,9 +353,7 @@ public class EditProfileActivity extends AppCompatActivity {
         alertDialog.setPositiveButton("Iya",
         new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                Intent mainIntent = new Intent(EditProfileActivity.this, MainActivity.class);
-                startActivity(mainIntent);
-                finish();
+                sentToMainActivity();
             }
         });
         // Setting Negative "NO" Button
@@ -367,8 +370,14 @@ public class EditProfileActivity extends AppCompatActivity {
 
     private void sentToMainActivity()
     {
-        Intent mainIntent = new Intent(EditProfileActivity.this, MainActivity.class);
+        Intent mainIntent = new Intent(EditAkunActivity.this, MainActivity.class);
         startActivity(mainIntent);
         finish();
+    }
+
+    private void toAkun(){
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameFragment,akunFragment);
+        fragmentTransaction.commit();
     }
 }

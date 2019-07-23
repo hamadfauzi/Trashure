@@ -1,14 +1,12 @@
 package com.example.trashure.Feature.Akun;
 
-import android.Manifest;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +14,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.example.trashure.Feature.EditProfile.EditProfileActivity;
 import com.example.trashure.Feature.Login.LoginActivity;
 import com.example.trashure.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -27,19 +24,24 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
 
 public class AkunFragment extends Fragment {
 
+    private BottomNavigationView bottomNavigationView;
+    //private EditAkunFragment editAkunFragment;
     private ImageButton btnEdit;
-    FirebaseAuth mAuth;
-    DatabaseReference userRefs;
-    String currentUserId;
-    CircleImageView civProfileImage;
-    Button btnKeluar;
-    TextView tvLevel,tvSaldo,tvTotalSampah,tvNomorHp,tvEmail,tvTglLahir,tvNama;
+    private FirebaseAuth mAuth;
+    private DatabaseReference userRefs;
+    private String currentUserId;
+    private CircleImageView civProfileImage;
+    private Button btnKeluar;
+    private TextView tvLevel,tvSaldo,tvTotalSampah,tvNomorHp,tvEmail,tvTglLahir,tvNama;
     private static final String TAG = "Upload";
 
     @Override
@@ -64,6 +66,9 @@ public class AkunFragment extends Fragment {
     }
 
     private void initialize() {
+        bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.bottomNavBar);
+        bottomNavigationView.setVisibility(View.VISIBLE);
+        //editAkunFragment = new EditAkunFragment();
         btnEdit = (ImageButton) getActivity().findViewById(R.id.edit_button);
         btnKeluar = (Button) getActivity().findViewById(R.id.btn_keluar);
         tvLevel = (TextView) getActivity().findViewById(R.id.tv_level_profile);
@@ -99,9 +104,10 @@ public class AkunFragment extends Fragment {
                         Picasso.with(getApplicationContext()).load("https://firebasestorage.googleapis.com/v0/b/trashure-71595.appspot.com/o/DisplayPictures%2Fdummy%2FUserLogo.png?alt=media&token=0ca8fe79-4dac-46c7-8356-0df6ea65464b").into(civProfileImage);
                     }
 
+                    String mySaldo = NumberFormat.getInstance(Locale.ITALIAN).format(Integer.valueOf(saldo));
                     tvNama.setText(nama);
                     tvLevel.setText(level);
-                    tvSaldo.setText("Rp. "+saldo);
+                    tvSaldo.setText("Rp."+mySaldo);
                     tvTglLahir.setText(tgllahir);
                     tvEmail.setText(email);
                     tvNomorHp.setText(phonenumber);
@@ -111,7 +117,6 @@ public class AkunFragment extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
             }
         });
 
@@ -125,10 +130,10 @@ public class AkunFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 /*FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frameFragment,editAkun);
+                fragmentTransaction.replace(R.id.frameFragment,editAkunFragment).addToBackStack(null);
                 fragmentTransaction.commit();*/
-                Intent registerIntent = new Intent(getActivity(), EditProfileActivity.class);
-                startActivity(registerIntent);
+                Intent mainIntent = new Intent(getActivity(), EditAkunActivity.class);
+                startActivity(mainIntent);
                 getActivity().finish();
             }
         });

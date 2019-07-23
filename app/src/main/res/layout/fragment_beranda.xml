@@ -8,19 +8,13 @@
     android:orientation="vertical"
     tools:context=".Feature.Beranda.BerandaFragment">
 
-   <LinearLayout
+   <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
         <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar_beranda"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <RelativeLayout
-                android:id="@+id/toolbar"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginRight="20dp">
-
+            android:layout_height="?actionBarSize">
                 <TextView
                     android:id="@+id/appName"
                     android:layout_width="wrap_content"
@@ -30,34 +24,38 @@
                     android:textColor="@color/colorText"
                     android:textStyle="bold"
                     />
-
-                <ImageButton
-                    android:id="@+id/notifikasi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/bell_vector"
-                    android:layout_centerVertical="true"
-                    android:layout_toLeftOf="@+id/setting"
-                    android:layout_marginRight="24dp"/>
-                <ImageButton
-                    android:id="@+id/setting"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/setting_vector"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
-                    />
-
-            </RelativeLayout>
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageButton
+                        android:id="@+id/notifikasi"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/bell_vector"
+                        android:layout_toLeftOf="@+id/setting"
+                        android:layout_marginRight="24dp"
+                        android:layout_centerVertical="true"/>
+                    <ImageButton
+                        android:id="@+id/setting"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:background="@drawable/setting_vector"
+                        android:layout_centerVertical="true"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="20dp"
+                        />
+                </RelativeLayout>
         </android.support.v7.widget.Toolbar>
 
         <RelativeLayout
+            android:id="@+id/layout_beranda_1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:background="@drawable/bg_menu_beranda"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:layout_below="@+id/toolbar_beranda"
             >
 
             <TextView
@@ -87,11 +85,13 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/layout_beranda_2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_menu_green"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
+            android:layout_below="@+id/layout_beranda_1"
             >
 
             <LinearLayout
@@ -159,12 +159,14 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/layout_beranda_3"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_white"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="20dp"
+            android:layout_below="@+id/layout_beranda_2"
             >
 
             <TextView
@@ -191,13 +193,15 @@
         </RelativeLayout>
 
         <RelativeLayout
+            android:id="@+id/layout_beranda_4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBackground"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            android:layout_below="@+id/layout_beranda_3">
             <TextView
                 android:id="@+id/setoran"
                 android:layout_width="wrap_content"
@@ -224,23 +228,26 @@
             android:id="@+id/rvListNotes"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="8dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             tools:listitem="@layout/list_setoran"
-            tools:itemCount=""
+            android:layout_below="@+id/layout_beranda_4"
+            tools:itemCount="4"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
         </android.support.v7.widget.RecyclerView>
 
         <RelativeLayout
+            android:id="@+id/layout_beranda_5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBackground"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_marginTop="20dp"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="16dp"
+            android:layout_below="@id/rvListNotes">
             <TextView
                 android:id="@+id/tips"
                 android:layout_width="wrap_content"
@@ -258,10 +265,11 @@
             android:background="@color/colorBackground"
             android:layout_marginTop="24dp"
             android:layout_marginLeft="8dp"
-            app:items_visible="three">
+            app:items_visible="three"
+            android:layout_below="@+id/layout_beranda_5">
 
         </in.goodiebag.carouselpicker.CarouselPicker>
 
-    </LinearLayout>-->
+    </RelativeLayout>-->
 
 </android.support.v4.widget.NestedScrollView>

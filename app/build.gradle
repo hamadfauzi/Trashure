@@ -58,4 +58,7 @@ dependencies {
 
     //Camera
     implementation 'com.karumi:dexter:5.0.0'
+
+    //MaterialDesign
+    //implementation 'com.google.android.material:material:1.1.0-alpha06'
 }

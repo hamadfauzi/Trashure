@@ -71,26 +71,30 @@
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/corner">
 
-                <LinearLayout
+                <RelativeLayout
                     android:id="@+id/ll_level"
                     android:gravity="start"
-                    android:layout_weight="2"
+                    android:layout_weight="3"
                     android:layout_marginTop="30dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content">
 
                     <ImageView
+                        android:id="@+id/gbr_lvl"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/iconfinder_level" />
+                        android:src="@drawable/iconfinder_crown"
+                        android:layout_centerHorizontal="true"/>
 
                     <TextView
+                        android:id="@+id/ket_lvl"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Level" />
+                        android:text="Level"
+                        android:layout_below="@id/gbr_lvl"
+                        android:layout_centerHorizontal="true"/>
 
                     <TextView
                         android:id="@+id/tv_level_profile"
@@ -101,31 +105,37 @@
                         android:layout_marginTop="10dp"
                         android:textColor="@color/colorText"
                         android:textSize="14sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        android:textStyle="bold"
+                        android:layout_below="@id/ket_lvl"
+                        android:layout_centerHorizontal="true"/>
+                </RelativeLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_toRightOf="@id/ll_level"
                     android:id="@+id/ll_saldo"
                     android:layout_gravity="center"
                     android:layout_weight="3"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="30dp"
-                    android:layout_marginBottom="30dp"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="30dp">
 
                     <ImageView
+                        android:id="@+id/gbr_saldo"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/iconfinder_bank" />
+                        android:src="@drawable/iconfinder_bank"
+                        android:layout_centerHorizontal="true"/>
 
                     <TextView
+                        android:id="@+id/ket_saldo"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Saldo" />
+                        android:text="Saldo"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@id/gbr_saldo"/>
 
                     <TextView
                         android:id="@+id/tv_saldo_profile"
@@ -136,32 +146,38 @@
                         android:layout_marginTop="10dp"
                         android:textColor="@color/colorText"
                         android:textSize="14sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        android:textStyle="bold"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@id/ket_saldo"/>
+                </RelativeLayout>
 
-                <LinearLayout
+                <RelativeLayout
                     android:layout_toRightOf="@id/ll_saldo"
                     android:id="@+id/ll_trash"
                     android:layout_weight="3"
                     android:layout_alignParentEnd="true"
-                    android:layout_width="wrap_content"
+                    android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginTop="30dp"
-                    android:layout_marginBottom="30dp"
-                    android:orientation="vertical">
+                    android:layout_marginBottom="30dp">
 
                     <ImageView
+                        android:id="@+id/gbr_sampah"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/iconfinder_trash" />
+                        android:src="@drawable/iconfinder_trash"
+                        android:layout_centerHorizontal="true"/>
 
                     <TextView
+                        android:id="@+id/ket_sampah"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:text="Total" />
+                        android:text="Total"
+                        android:layout_centerHorizontal="true"
+                        android:layout_below="@id/gbr_sampah"/>
 
                     <TextView
                         android:id="@+id/tv_totalsampah_profile"
@@ -172,8 +188,10 @@
                         android:layout_marginTop="10dp"
                         android:textColor="@color/colorText"
                         android:textSize="14sp"
-                        android:textStyle="bold" />
-                </LinearLayout>
+                        android:textStyle="bold"
+                        android:layout_below="@id/ket_sampah"
+                        android:layout_centerHorizontal="true"/>
+                </RelativeLayout>
 
             </LinearLayout>
 

@@ -24,7 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Feature.EditProfile.EditProfileActivity"
+        <activity android:name=".Feature.Akun.EditAkunActivity"
             android:parentActivityName=".Feature.Login.LoginActivity">
         </activity>
 

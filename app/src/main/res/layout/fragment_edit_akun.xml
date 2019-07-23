@@ -5,29 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Feature.Akun.AkunFragment"
-    android:background="@color/colorBackground">
+    android:background="@android:color/white">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_edit_akun"
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="@android:color/white"
             android:theme="@style/ToolbarTheme">
-            <ImageButton
-                android:id="@+id/btn_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/arrow_left"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Edit Akun"
                 android:textSize="26sp"
                 android:textColor="@color/colorText"
-                android:textStyle="bold"
-                android:layout_marginLeft="40dp"/>
+                android:textStyle="bold"/>
         </android.support.v7.widget.Toolbar>
 
         <RelativeLayout
@@ -102,7 +97,6 @@
                         android:background="@android:color/transparent"
                         android:paddingTop="4dp"
                         android:paddingLeft="0dp"
-                        android:focusable="false"
                         />
                 </RelativeLayout>
             </LinearLayout>
@@ -145,7 +139,6 @@
                         android:background="@android:color/transparent"
                         android:paddingTop="4dp"
                         android:paddingLeft="0dp"
-                        android:focusable="false"
                         />
                 </RelativeLayout>
             </LinearLayout>
@@ -188,7 +181,6 @@
                         android:background="@android:color/transparent"
                         android:paddingTop="4dp"
                         android:paddingLeft="0dp"
-                        android:focusable="false"
                         />
                 </RelativeLayout>
             </LinearLayout>
