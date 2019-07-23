@@ -176,7 +176,7 @@ public class ScanFragment extends Fragment {
             }
         });
     }
-2
+
     private void sentToSuccess(){
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameFragment,berhasilScanFragment);
