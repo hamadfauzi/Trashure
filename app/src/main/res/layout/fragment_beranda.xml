@@ -71,7 +71,7 @@
                 />
 
             <TextView
-                android:id="@+id/uang"
+                android:id="@+id/tv_saldo_beranda"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Rp.150.000"
@@ -111,7 +111,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/level"
+                    android:id="@+id/tv_level_beranda"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" Trashure Sejati"
@@ -146,7 +146,7 @@
                     />
 
                 <TextView
-                    android:id="@+id/trashbag"
+                    android:id="@+id/tv_status_trashbag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" Tidak Terhubung"
@@ -197,8 +197,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBackground"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="16dp"
             android:layout_below="@+id/layout_beranda_3">
@@ -243,8 +243,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBackground"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="16dp"
             android:layout_below="@id/rvListNotes">
