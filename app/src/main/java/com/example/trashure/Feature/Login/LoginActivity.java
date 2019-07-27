@@ -1,15 +1,22 @@
 package com.example.trashure.Feature.Login;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -112,6 +119,7 @@ public class LoginActivity extends AppCompatActivity{
         });
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     private void initialize() {
 
         mAuth = FirebaseAuth.getInstance();
@@ -125,6 +133,22 @@ public class LoginActivity extends AppCompatActivity{
         tvDaftar = (TextView) findViewById(R.id.tv_daftar);
         tvLupaPassword = (TextView) findViewById(R.id.tv_lupa_password);
         btnFacebookView = (ImageView) findViewById(R.id.btn_facebook);
+
+        int tintColorDark = ContextCompat.getColor(getApplicationContext(), android.R.color.darker_gray);
+        int tintColorDrawable = ContextCompat.getColor(getApplicationContext(), R.color.colorDrawable);
+
+        Drawable drawableVisibility = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_visibility);
+        drawableVisibility = DrawableCompat.wrap(drawableVisibility);
+        DrawableCompat.setTint(drawableVisibility.mutate(), tintColorDark);
+
+        Drawable drawableLock = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_lock);
+        drawableLock = DrawableCompat.wrap(drawableLock);
+        DrawableCompat.setTint(drawableLock.mutate(), tintColorDrawable);
+
+        drawableVisibility.setBounds( 0, 0, drawableVisibility.getIntrinsicWidth(), drawableVisibility.getIntrinsicHeight());
+        drawableLock.setBounds( 0, 0, drawableLock.getIntrinsicWidth(), drawableLock.getIntrinsicHeight());
+
+        etPassword.setCompoundDrawables(drawableLock, null, drawableVisibility, null);
 
         etEmail.addTextChangedListener(new TextWatcher() {
             @Override
@@ -174,6 +198,52 @@ public class LoginActivity extends AppCompatActivity{
             @Override
             public void onClick(View v) {
                 btnFacebook.performClick();
+            }
+        });
+
+        etPassword.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (etPassword.getRight() - etPassword.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+
+                        int tintColorDark = ContextCompat.getColor(getApplicationContext(), android.R.color.darker_gray);
+                        int tintColorDrawable = ContextCompat.getColor(getApplicationContext(), R.color.colorDrawable);
+
+                        Button button = (Button) findViewById(R.id.button);
+
+                        Drawable drawableVisibility = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_visibility);
+                        drawableVisibility = DrawableCompat.wrap(drawableVisibility);
+                        DrawableCompat.setTint(drawableVisibility.mutate(), tintColorDrawable);
+
+                        Drawable drawableLock = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_lock);
+                        drawableLock = DrawableCompat.wrap(drawableLock);
+                        DrawableCompat.setTint(drawableLock.mutate(), tintColorDrawable);
+
+                        drawableVisibility.setBounds( 0, 0, drawableVisibility.getIntrinsicWidth(), drawableVisibility.getIntrinsicHeight());
+                        drawableLock.setBounds( 0, 0, drawableLock.getIntrinsicWidth(), drawableLock.getIntrinsicHeight());
+
+                        if(etPassword.getTransformationMethod() == HideReturnsTransformationMethod.getInstance())
+                        {
+                            etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            DrawableCompat.setTint(drawableVisibility.mutate(), tintColorDark);
+                            etPassword.setCompoundDrawables(drawableLock, null, drawableVisibility, null);
+                        }
+                        else
+                        {
+                            etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            etPassword.setCompoundDrawables(drawableLock, null, drawableVisibility, null);
+
+                        }
+                        return true;
+                    }
+                }
+                return false;
             }
         });
     }
