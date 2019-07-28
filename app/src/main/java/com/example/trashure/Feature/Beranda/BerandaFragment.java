@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+<<<<<<< HEAD
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -30,6 +31,8 @@ import java.text.NumberFormat;
 import java.util.Locale;
 
 import static com.facebook.FacebookSdk.getApplicationContext;
+=======
+>>>>>>> ebdec974ad25293ddea3c6c8f55fb6356034f6d4
 
 
 public class BerandaFragment extends Fragment{
@@ -38,9 +41,16 @@ public class BerandaFragment extends Fragment{
     private NotifikasiFragment notifikasiFragment;
     private SettingFragment settingFragment;
     private BottomNavigationView bottomNavigationView;
+<<<<<<< HEAD
     private TextView tv_saldo,tv_level;
     private DatabaseReference userRefs;
     private FirebaseAuth mAuth;
+=======
+    private FirebaseAuth mAuth;
+    private String currentUserID;
+    private DatabaseReference userRefs;
+    private TextView tvSaldo,tvLevel,tvStatus;
+>>>>>>> ebdec974ad25293ddea3c6c8f55fb6356034f6d4
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,6 +71,26 @@ public class BerandaFragment extends Fragment{
 
     private void eventFragmentAkun() {
         initialize();
+
+        userRefs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists())
+                {
+                    String saldo = dataSnapshot.child("saldo").getValue().toString();
+                    String level = dataSnapshot.child("level").getValue().toString();
+
+                    tvSaldo.setText("Rp. " + saldo);
+                    tvLevel.setText(" " + level);
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     public void initialize(){
@@ -74,6 +104,7 @@ public class BerandaFragment extends Fragment{
         notifikasiFragment = new NotifikasiFragment();
         bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.bottomNavBar);
         bottomNavigationView.setVisibility(View.VISIBLE);
+<<<<<<< HEAD
         userRefs.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -98,6 +129,10 @@ public class BerandaFragment extends Fragment{
 
             }
         });
+=======
+        tvSaldo = (TextView) getActivity().findViewById(R.id.tv_saldo_beranda);
+        tvLevel = (TextView) getActivity().findViewById(R.id.tv_level_beranda);
+>>>>>>> ebdec974ad25293ddea3c6c8f55fb6356034f6d4
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,6 +146,11 @@ public class BerandaFragment extends Fragment{
                 sentToNotif();
             }
         });
+
+        mAuth = FirebaseAuth.getInstance();
+        currentUserID = mAuth.getCurrentUser().getUid();
+        userRefs = FirebaseDatabase.getInstance().getReference().child("User").child(currentUserID);
+
     }
 
     private void sentToSetting(){

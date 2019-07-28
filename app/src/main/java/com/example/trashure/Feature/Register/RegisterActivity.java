@@ -1,15 +1,22 @@
 package com.example.trashure.Feature.Register;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.graphics.drawable.DrawableCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.telecom.Call;
 import android.text.TextUtils;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -61,7 +68,7 @@ public class RegisterActivity extends AppCompatActivity {
     private CallbackManager mCallbackManager;
     LoginButton btnFacebook;
     ImageView btnFacebookView;
-    EditText etNama,etNoTelephone,etEmail,etPassword;
+    EditText etNama,etNoTelephone,etEmail,etPasswordRegister;
     FirebaseAuth mAuth;
     TextView tvMasuk;
     Button btnGoogle,btnDaftar;
@@ -188,12 +195,13 @@ public class RegisterActivity extends AppCompatActivity {
                 });
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     public void initialize()
     {
         etEmail = (EditText) findViewById(R.id.et_email_register);
         etNama = (EditText) findViewById(R.id.et_nama_register);
         etNoTelephone = (EditText) findViewById(R.id.et_nomorhp_register);
-        etPassword = (EditText) findViewById(R.id.et_pass_register);
+        etPasswordRegister = (EditText) findViewById(R.id.et_pass_register);
         btnDaftar = (Button) findViewById(R.id.btn_daftar);
         btnFacebook = (LoginButton) findViewById(R.id.register_button);
         btnFacebookView = (ImageView) findViewById(R.id.btn_facebook_register);
@@ -203,6 +211,22 @@ public class RegisterActivity extends AppCompatActivity {
         mDialog = new ProgressDialog(this);
         toolbar = (Toolbar) findViewById(R.id.toolbar_register);
         setToolbar();
+
+        int tintColorDark = ContextCompat.getColor(getApplicationContext(), android.R.color.darker_gray);
+        int tintColorDrawable = ContextCompat.getColor(getApplicationContext(), R.color.colorDrawable);
+
+        Drawable drawableVisibility = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_visibility);
+        drawableVisibility = DrawableCompat.wrap(drawableVisibility);
+        DrawableCompat.setTint(drawableVisibility.mutate(), tintColorDark);
+
+        Drawable drawableLock = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_lock);
+        drawableLock = DrawableCompat.wrap(drawableLock);
+        DrawableCompat.setTint(drawableLock.mutate(), tintColorDrawable);
+
+        drawableVisibility.setBounds( 0, 0, drawableVisibility.getIntrinsicWidth(), drawableVisibility.getIntrinsicHeight());
+        drawableLock.setBounds( 0, 0, drawableLock.getIntrinsicWidth(), drawableLock.getIntrinsicHeight());
+
+        etPasswordRegister.setCompoundDrawables(drawableLock, null, drawableVisibility, null);
 
         btnDaftar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -231,6 +255,50 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 btnFacebook.performClick();
+            }
+        });
+
+        etPasswordRegister.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                final int DRAWABLE_LEFT = 0;
+                final int DRAWABLE_TOP = 1;
+                final int DRAWABLE_RIGHT = 2;
+                final int DRAWABLE_BOTTOM = 3;
+
+                if(event.getAction() == MotionEvent.ACTION_UP) {
+                    if(event.getRawX() >= (etPasswordRegister.getRight() - etPasswordRegister.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+
+                        int tintColorDark = ContextCompat.getColor(getApplicationContext(), android.R.color.darker_gray);
+                        int tintColorDrawable = ContextCompat.getColor(getApplicationContext(), R.color.colorDrawable);
+
+                        Drawable drawableVisibility = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_visibility);
+                        drawableVisibility = DrawableCompat.wrap(drawableVisibility);
+                        DrawableCompat.setTint(drawableVisibility.mutate(), tintColorDrawable);
+
+                        Drawable drawableLock = ContextCompat.getDrawable(getApplicationContext(), R.drawable.ic_lock);
+                        drawableLock = DrawableCompat.wrap(drawableLock);
+                        DrawableCompat.setTint(drawableLock.mutate(), tintColorDrawable);
+
+                        drawableVisibility.setBounds( 0, 0, drawableVisibility.getIntrinsicWidth(), drawableVisibility.getIntrinsicHeight());
+                        drawableLock.setBounds( 0, 0, drawableLock.getIntrinsicWidth(), drawableLock.getIntrinsicHeight());
+
+                        if(etPasswordRegister.getTransformationMethod() == HideReturnsTransformationMethod.getInstance())
+                        {
+                            etPasswordRegister.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                            DrawableCompat.setTint(drawableVisibility.mutate(), tintColorDark);
+                            etPasswordRegister.setCompoundDrawables(drawableLock, null, drawableVisibility, null);
+                        }
+                        else
+                        {
+                            etPasswordRegister.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                            etPasswordRegister.setCompoundDrawables(drawableLock, null, drawableVisibility, null);
+
+                        }
+                        return true;
+                    }
+                }
+                return false;
             }
         });
 
@@ -370,7 +438,7 @@ public class RegisterActivity extends AppCompatActivity {
         final String email = etEmail.getText().toString();
         final String nama = etNama.getText().toString();
         final String telepohone = etNoTelephone.getText().toString();
-        String password = etPassword.getText().toString();
+        String password = etPasswordRegister.getText().toString();
 
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(nama) || TextUtils.isEmpty(telepohone) || TextUtils.isEmpty(password))
         {

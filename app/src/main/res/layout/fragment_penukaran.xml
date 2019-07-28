@@ -5,10 +5,15 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Feature.Penukaran.PenukaranFragment"
-    android:background="@color/colorBackground">
+    android:background="@android:color/white">
     <RelativeLayout
         android:layout_width="match_parent"
+<<<<<<< HEAD
         android:layout_height="wrap_content">
+=======
+        android:layout_height="match_parent"
+        android:background="@android:color/white">
+>>>>>>> ebdec974ad25293ddea3c6c8f55fb6356034f6d4
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_tukar"
             android:layout_width="match_parent"
@@ -24,9 +29,15 @@
         </android.support.v7.widget.Toolbar>
         <LinearLayout
             android:layout_width="match_parent"
+<<<<<<< HEAD
             android:layout_height="match_parent"
             android:layout_marginStart="18dp"
             android:layout_marginEnd="18dp"
+=======
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp"
+>>>>>>> ebdec974ad25293ddea3c6c8f55fb6356034f6d4
             android:layout_marginTop="30dp"
             android:background="@drawable/bg_white"
             android:orientation="vertical"

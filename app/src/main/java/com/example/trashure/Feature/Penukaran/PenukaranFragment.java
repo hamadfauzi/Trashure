@@ -69,7 +69,7 @@ public class PenukaranFragment extends Fragment {
         expandableRelativeLayout = (ExpandableRelativeLayout) getActivity().findViewById(R.id.expandableLayout);
         final LinearLayout llPulsa = (LinearLayout) getActivity().findViewById(R.id.ll_pulsa);
         final ImageView arrow = (ImageView) getActivity().findViewById(R.id.iv_penukaran_pulsa);
-        expandableRelativeLayout.toggle();
+        //expandableRelativeLayout.toggle();
         llPulsa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
