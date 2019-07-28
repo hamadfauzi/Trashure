@@ -20,136 +20,143 @@
             android:textColor="@color/colorText"
             android:textStyle="bold"/>
     </android.support.v7.widget.Toolbar>
-    <RelativeLayout
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_below="@id/toolbar_scan"
+        android:layout_marginBottom="?actionBarSize"
+        android:background="@drawable/bg_white"
         android:layout_marginTop="47dp"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
-        android:background="@drawable/bg_white"
-        android:layout_below="@id/toolbar_scan">
-
-        <TextView
-            android:id="@+id/text-arahkan"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="36dp"
-            android:text="@string/arahkan_ke"
-            android:textSize="14sp"
-            android:textColor="@color/colorTextGrey"
-            android:lineSpacingExtra="0sp"
-            />
-        
-        <SurfaceView
-            android:id="@+id/QRScanner"
+        android:orientation="vertical"
+        android:weightSum="10">
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_below="@+id/text-arahkan"
-            android:layout_marginTop="32dp"
-            android:layout_centerHorizontal="true"
-            android:layout_centerInParent="true"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
-            />
+            android:layout_height="0dp"
+            android:layout_weight="7">
+            <TextView
+                android:id="@+id/text-arahkan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="36dp"
+                android:text="@string/arahkan_ke"
+                android:textSize="14sp"
+                android:textColor="@color/colorTextGrey"
+                android:lineSpacingExtra="0sp"
+                />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/text-arahkan"
+                android:layout_centerInParent="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginLeft="80dp">
+                <SurfaceView
+                    android:id="@+id/QRScanner"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="60dp"
+                    android:layout_marginTop="60dp">
+                    <ImageView
+                        android:id="@+id/atas_kiri"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/atas_kiri"/>
 
-        <ImageView
-            android:id="@+id/atas_kiri"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:background="@drawable/atas_kiri"
-            android:layout_below="@id/text-arahkan"
-            android:layout_marginTop="28dp"
-            android:layout_marginLeft="56dp"/>
+                    <ImageView
+                        android:id="@+id/atas_kanan"
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/atas_kanan"
+                        android:layout_alignParentRight="true"/>
 
-        <ImageView
-            android:id="@+id/atas_kanan"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:background="@drawable/atas_kanan"
-            android:layout_below="@id/text-arahkan"
-            android:layout_marginTop="28dp"
-            android:layout_alignParentRight="true"
-            android:layout_marginRight="56dp"/>
+                    <ImageView
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@drawable/bawah_kiri"/>
 
-        <ImageView
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_below="@id/atas_kiri"
-            android:background="@drawable/bawah_kiri"
-            android:layout_marginTop="98dp"
-            android:layout_marginLeft="56dp"/>
+                    <ImageView
+                        android:layout_width="55dp"
+                        android:layout_height="55dp"
+                        android:background="@drawable/bawah_kanan"
+                        android:layout_alignParentBottom="true"
+                        android:layout_alignParentRight="true"/>
+                </RelativeLayout>
+            </RelativeLayout>
 
-        <ImageView
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:background="@drawable/bawah_kanan"
-            android:layout_below="@id/atas_kanan"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="98dp"
-            android:layout_marginRight="56dp"/>
-
+        </RelativeLayout>
         <ImageView
             android:id="@+id/separator"
             android:layout_width="match_parent"
             android:layout_height="2dp"
-            android:layout_below="@+id/QRScanner"
-            android:layout_marginTop="40dp"
             android:background="@drawable/separator"
-            android:contentDescription="TODO" />
-
-        <TextView
-            android:id="@+id/kode-id"
-            android:layout_below="@+id/separator"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:text="@string/kode_qr"
-            android:textSize="13sp"
-            android:textColor="@color/colorTextGrey"
-            android:lineSpacingExtra="0sp"
-            />
-
+            android:contentDescription="TODO"
+            android:layout_marginTop="20dp" />
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/kode-id"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
-            android:layout_marginBottom="16dp"
-            android:layout_marginLeft="34dp">
-
-            <EditText
-                android:id="@+id/edit_id"
-                android:layout_width="313dp"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_edit_text"
-                android:hint="@string/masukkan_id"
-                android:paddingLeft="18dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:textSize="14sp"
-                android:textColor="@color/colorTextGrey"
-                android:inputType="text"
-                android:maxLength="10"/>
-
-            <Button
-                android:id="@+id/btn_scan"
+            android:layout_height="0dp"
+            android:layout_weight="3">
+            <TextView
+                android:id="@+id/kode-id"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_btn_green"
-                android:paddingLeft="40dp"
-                android:paddingRight="40dp"
-                android:paddingTop="16dp"
-                android:paddingBottom="16dp"
-                android:text="@string/scan"
-                android:textAllCaps="false"
-                android:textColor="@android:color/white"
-                android:textSize="14sp"
-                android:layout_alignParentRight="true"/>
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:text="@string/kode_qr"
+                android:textSize="13sp"
+                android:textColor="@color/colorTextGrey"
+                android:lineSpacingExtra="0sp"
+                />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/kode-id"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:layout_marginLeft="34dp">
+
+                <EditText
+                    android:id="@+id/edit_id"
+                    android:layout_width="313dp"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_edit_text"
+                    android:hint="@string/masukkan_id"
+                    android:paddingLeft="18dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorTextGrey"
+                    android:inputType="text"
+                    android:maxLength="10"/>
+
+                <Button
+                    android:id="@+id/btn_scan"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_btn_green"
+                    android:paddingLeft="40dp"
+                    android:paddingRight="40dp"
+                    android:paddingTop="16dp"
+                    android:paddingBottom="16dp"
+                    android:text="@string/scan"
+                    android:textAllCaps="false"
+                    android:textColor="@android:color/white"
+                    android:textSize="14sp"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
         </RelativeLayout>
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </RelativeLayout>

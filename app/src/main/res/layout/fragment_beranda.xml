@@ -84,64 +84,59 @@
 
         </RelativeLayout>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/layout_beranda_2"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="70dp"
             android:background="@drawable/bg_menu_green"
             android:layout_marginLeft="8dp"
             android:layout_marginRight="8dp"
             android:layout_below="@+id/layout_beranda_1"
-            >
-
+            android:weightSum="12">
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_centerVertical="true"
+                android:layout_gravity="center_vertical"
+                android:gravity="left"
+                android:layout_weight="6"
                 android:layout_marginLeft="16dp">
                 <TextView
-                android:id="@+id/ket_level"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Level :"
-                android:textColor="@android:color/white"
-                android:textSize="13sp"
-                android:textStyle="bold"
+                    android:id="@+id/ket_level"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Level : "
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold"
                     />
 
                 <TextView
                     android:id="@+id/level"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" Trashure Sejati"
+                    android:text="Trashure Sejati"
                     android:textColor="@android:color/white"
-                    android:textSize="13sp"
                     />
-
             </LinearLayout>
-
             <ImageView
                 android:id="@+id/separator"
                 android:layout_width="2dp"
-                android:layout_height="70dp"
+                android:layout_height="60dp"
                 android:background="@drawable/separator"
-                android:layout_centerInParent="true"/>
-
+                android:layout_gravity="center_vertical"/>
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_marginRight="16dp">
+                android:layout_gravity="center_vertical"
+                android:gravity="center_horizontal"
+                android:layout_weight="6">
                 <TextView
                     android:id="@+id/ket_trashbag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Trashbag :"
                     android:textColor="@android:color/white"
-                    android:textSize="13sp"
                     android:textStyle="bold"
                     />
 
@@ -151,12 +146,10 @@
                     android:layout_height="wrap_content"
                     android:text=" Tidak Terhubung"
                     android:textColor="@android:color/white"
-                    android:textSize="10sp"
                     />
 
             </LinearLayout>
-
-        </RelativeLayout>
+        </LinearLayout>
 
         <RelativeLayout
             android:id="@+id/layout_beranda_3"

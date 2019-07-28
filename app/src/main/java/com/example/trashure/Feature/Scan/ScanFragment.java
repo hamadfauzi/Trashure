@@ -1,17 +1,16 @@
 package com.example.trashure.Feature.Scan;
 
 import android.Manifest;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.SparseArray;
@@ -29,7 +28,6 @@ import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,9 +36,11 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Map;
 
-public class ScanFragment extends Fragment {
+import me.dm7.barcodescanner.zxing.ZXingScannerView;
+
+
+public class ScanFragment extends Fragment{
 
     private ScanFragment scanFragment;
     private BerhasilScanFragment berhasilScanFragment;
@@ -53,6 +53,7 @@ public class ScanFragment extends Fragment {
     private BottomNavigationView bottomNavigationView;
     private EditText et_id;
     private Button btn_scan;
+    private boolean cek;
 
 
     @Override
@@ -100,7 +101,7 @@ public class ScanFragment extends Fragment {
         bottomNavigationView.setVisibility(View.VISIBLE);
         berhasilScanFragment = new BerhasilScanFragment();
         sv_scanner = (SurfaceView) getActivity().findViewById(R.id.QRScanner);
-        barcodeDetector = new BarcodeDetector.Builder(getActivity()).setBarcodeFormats(Barcode.ALL_FORMATS).build();
+        barcodeDetector = new BarcodeDetector.Builder(getActivity()).setBarcodeFormats(Barcode.QR_CODE).build();
         cameraSource = new CameraSource.Builder(getActivity().getApplicationContext(), barcodeDetector).setRequestedPreviewSize(1024,768).setAutoFocusEnabled(true).build();
         sv_scanner.getHolder().addCallback(new SurfaceHolder.Callback() {
             @Override
@@ -134,20 +135,19 @@ public class ScanFragment extends Fragment {
 
             @Override
             public void receiveDetections(Detector.Detections<Barcode> detections) {
-                final SparseArray<Barcode> barcodes = detections.getDetectedItems(); /* Retrieving QR Code */
+                final SparseArray<Barcode> barcodes = detections.getDetectedItems();  //Retrieving QR Code
                 if (barcodes.size() > 0) {
-                    barcodeDetector.release(); /* Releasing barcodeDetector */
-                    ToneGenerator toneNotification = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100); /* Setting beep sound */
+                    barcodeDetector.release();  //Releasing barcodeDetector
+                    ToneGenerator toneNotification = new ToneGenerator(AudioManager.STREAM_NOTIFICATION, 100);  //Setting beep sound
                     toneNotification.startTone(ToneGenerator.TONE_PROP_BEEP, 150);
 
-                    scanResult = barcodes.valueAt(0).displayValue.toString(); /* Retrieving text from QR Code */
+                    scanResult = barcodes.valueAt(0).displayValue.toString();  //Retrieving text from QR Code
                     Log.d("SCANRESULT",scanResult);
                     Log.d("ISI ID TRASHBAG",id_trashbag[0]+","+id_trashbag[1]);
                     for (int i = 0; i < id_trashbag.length; i++) {
                         if (!scanResult.equalsIgnoreCase(id_trashbag[i])){
                             Log.d("QRCODE SALAH!","QRCODE TIDAK TERDETEKSI");
                             sentToScan();
-                            //Toast.makeText(getActivity(), "Wrong QR Code!", Toast.LENGTH_LONG).show();
                         }else{
                             berhasilScanFragment.setId(scanResult);
                             sentToSuccess();
@@ -165,7 +165,7 @@ public class ScanFragment extends Fragment {
                 }else{
                     for (int i = 0; i < id_trashbag.length; i++) {
                         if (id_trashbag[i].equalsIgnoreCase(et_id.getText().toString())){
-                            berhasilScanFragment.setId(et_id.getText().toString());
+                            berhasilScanFragment.setId(et_id.getText().toString().toUpperCase());
                             sentToSuccess();
                             break;
                         }else{

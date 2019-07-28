@@ -29,6 +29,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 
 public class KonfirmasiFragment extends Fragment {
@@ -196,8 +199,15 @@ public class KonfirmasiFragment extends Fragment {
                     transaksiHash.put("jenisPenukaran",jenisLayanan);
                     transaksiHash.put("provider",provider);
                     transaksiHash.put("phoneNumber",nomor);
-                    transaksiHash.put("nominal",pulsa);
-                    transaksiHash.put("biaya",harga);
+                    transaksiHash.put("nominal",Integer.valueOf(pulsa));
+                    transaksiHash.put("biaya",Integer.valueOf(harga));
+                    Date tgl = Calendar.getInstance().getTime();
+                    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                    SimpleDateFormat tf = new SimpleDateFormat("HH.mm");
+                    String date = df.format(tgl);
+                    String time = tf.format(tgl);
+                    transaksiHash.put("tanggal_penukaran",date);
+                    transaksiHash.put("jam_penukaran",time);
                     transaksiReference.child(String.valueOf(counter)).updateChildren(transaksiHash).addOnCompleteListener(new OnCompleteListener() {
                         @Override
                         public void onComplete(@NonNull Task task) {

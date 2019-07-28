@@ -203,28 +203,27 @@ public class PenukaranFragment extends Fragment {
             if(s.charAt(0)=='0' && s.charAt(1)=='8') {
                 approved=true;
                 provider = "Telkomsel";
-                //et_phoneNumber.setTextColor(Color.argb(120, 0, 0, 0));
                 if (s.charAt(2) == '1' && s.charAt(3) == '1') {
                     Log.d("IDENTITAS KARTU", "KARTU HALO 10-11 Digit");
-                    et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.telkomsel_24x96, 0);
+                    et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.halo_logo_24x24, 0);
                 } else if (s.charAt(2) == '1' && s.charAt(3) == '2') {
                     Log.d("IDENTITAS KARTU", "KARTU SIMPATI 10-11 Digit");
-                    et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.telkomsel_24x96, 0);
+                    et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.simpati_logo_24x24, 0);
                 } else if (s.charAt(2) == '1' && s.charAt(3) == '3') {
                     Log.d("IDENTITAS KARTU", "KARTU SIMPATI 11-12 Digit");
-                    et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.telkomsel_24x96, 0);
+                    et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.simpati_logo_24x24, 0);
                 } else if ((s.charAt(2) == '2' && s.charAt(3) == '1') || (s.charAt(2) == '2' && s.charAt(3) == '2')) {
                     Log.d("IDENTITAS KARTU", "KARTU SIMPATI 12 Digit");
-                    et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.telkomsel_24x96, 0);
+                    et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.simpati_logo_24x24, 0);
                 } else if (s.charAt(2) == '2' && s.charAt(3) == '3') {
                     Log.d("IDENTITAS KARTU", "KARTU AS 12 Digit");
-                    et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.telkomsel_24x96, 0);
-                } else if (s.charAt(2) == '5' && s.charAt(3) == '2') {
+                    et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.as_logo_24x24, 0);
+                } else if ((s.charAt(2) == '5' && s.charAt(3) == '2') || (s.charAt(2) == '5' && s.charAt(3) == '3')) {
                     Log.d("IDENTITAS KARTU", "KARTU AS 12 Digit");
-                    et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.telkomsel_24x96, 0);
+                    et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.as_logo_24x24, 0);
                 } else if (s.charAt(2) == '5' && s.charAt(3) == '1') {
                     Log.d("IDENTITAS KARTU", "KARTU AS 10-12 Digit");
-                    et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.telkomsel_24x96, 0);
+                    et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.as_logo_24x24, 0);
                 } else {
                     Ooredo(s);
                 }
@@ -247,25 +246,22 @@ public class PenukaranFragment extends Fragment {
         provider = "Indosat Ooredoo";
             if(s.charAt(2) == '5' && s.charAt(3) == '5'){
                 Log.d("IDENTITAS KARTU", "KARTU MATRIX 10 Digit");
-                et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ooredoo_24x84,0);
+                et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.mentari_logo_24x24,0);
             }else if(s.charAt(2) == '5' && s.charAt(3) == '6') {
                 Log.d("IDENTITAS KARTU", "KARTU IM3 10-12 Digit");
-                et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ooredoo_24x84,0);
+                et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.im3_logo_24x24,0);
             }else if (s.charAt(2) == '5' && s.charAt(3) == '7'){
                 Log.d("IDENTITAS KARTU", "KARTU IM3 12 Digit");
-                et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ooredoo_24x84,0);
+                et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.im3_logo_24x24,0);
             }else if((s.charAt(2) == '5' && s.charAt(3) == '8') || (s.charAt(2) == '2' && s.charAt(3) == '2')){
                 Log.d("IDENTITAS KARTU", "KARTU MENTARI 12 Digit");
-                et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ooredoo_24x84,0);
-            }else if(s.charAt(2) == '1' && s.charAt(3) == '4'){
-                Log.d("IDENTITAS KARTU", "KARTU AS 12 Digit");
-                et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ooredoo_24x84,0);
+                et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.mentari_logo_24x24,0);
             }else if(s.charAt(2) == '1' && s.charAt(3) == '5'){
                 Log.d("IDENTITAS KARTU", "KARTU MATRIX 11-12 Digit");
-                et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ooredoo_24x84,0);
+                et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.mentari_logo_24x24,0);
             }else if(s.charAt(2) == '1' && s.charAt(3) == '6'){
                 Log.d("IDENTITAS KARTU", "KARTU MENTARI 10-12 Digit");
-                et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.ooredoo_24x84,0);
+                et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.mentari_logo_24x24,0);
             }else{
                 XL(s);
             }
@@ -275,10 +271,10 @@ public class PenukaranFragment extends Fragment {
         provider="XL Axiata";
         if((s.charAt(2) == '1' && s.charAt(3) == '7') || (s.charAt(2) == '1' && s.charAt(3) == '8') || (s.charAt(2) == '1' && s.charAt(3) == '9')){
             Log.d("IDENTITAS KARTU", "KARTU XL 10-12 Digit");
-            et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.axiata_24x24,0);
+            et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.xl_logo_24x24,0);
         }else if((s.charAt(2) == '5' && s.charAt(3) == '9') || (s.charAt(2) == '7' && s.charAt(3) == '7') || (s.charAt(2) == '7' && s.charAt(3) == '8')) {
             Log.d("IDENTITAS KARTU", "KARTU XL 12 Digit");
-            et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.axiata_24x24,0);
+            et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.xl_logo_24x24,0);
         }else{
             Tri(s);
         }
@@ -286,9 +282,30 @@ public class PenukaranFragment extends Fragment {
 
     public void Tri(CharSequence s){
         provider = "Tri Indonesia";
-        if((s.charAt(2) == '9' && s.charAt(3) == '6') || (s.charAt(2) == '9' && s.charAt(3) == '7') || (s.charAt(2) == '9' && s.charAt(3) == '8') || (s.charAt(2) == '9' && s.charAt(3) == '9')){
+        if((s.charAt(2) == '9' && s.charAt(3) == '5') || (s.charAt(2) == '9' && s.charAt(3) == '6') || (s.charAt(2) == '9' && s.charAt(3) == '7') || (s.charAt(2) == '9' && s.charAt(3) == '8') || (s.charAt(2) == '9' && s.charAt(3) == '9')){
             Log.d("IDENTITAS KARTU", "KARTU Tri 11-12 Digit");
-            et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.tri_24x24,0);
+            et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.tri_logo_24x24,0);
+        }else{
+            Axis(s);
+        }
+    }
+
+    public void Axis(CharSequence s){
+        provider = "AXIS";
+        if((s.charAt(2) == '3' && s.charAt(3) == '1') || (s.charAt(2) == '3' && s.charAt(3) == '2') || (s.charAt(2) == '3' && s.charAt(3) == '3') || (s.charAt(2) == '3' && s.charAt(3) == '8')){
+            Log.d("IDENTITAS KARTU", "KARTU Axis 11-12 Digit");
+            et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.axis_logo_24x24,0);
+        }else{
+            Smartfren(s);
+        }
+    }
+
+    public void Smartfren(CharSequence s){
+        provider = "Smartfren";
+        if((s.charAt(2) == '8' && s.charAt(3) == '1') || (s.charAt(2) == '8' && s.charAt(3) == '2') || (s.charAt(2) == '8' && s.charAt(3) == '3') || (s.charAt(2) == '8' && s.charAt(3) == '4') || (s.charAt(2) == '8' && s.charAt(3) == '5')
+                || (s.charAt(2) == '8' && s.charAt(3) == '6') || (s.charAt(2) == '8' && s.charAt(3) == '7') || (s.charAt(2) == '8' && s.charAt(3) == '8') || (s.charAt(2) == '8' && s.charAt(3) == '9')){
+            Log.d("IDENTITAS KARTU", "KARTU Axis 11-12 Digit");
+            et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,R.drawable.smartfren_logo_24x24,0);
         }else{
             approved = false;
             et_phoneNumber.setCompoundDrawablesWithIntrinsicBounds(0,0,0,0);
