@@ -59,6 +59,12 @@ dependencies {
     //Camera
     implementation 'com.karumi:dexter:5.0.0'
 
-    //ZXingBarcode
-    implementation 'me.dm7.barcodescanner:zxing:1.9'
+    //Notification Badge
+    implementation 'com.nex3z:notification-badge:0.1.0'
+
+    //RecyclerView
+    implementation 'com.android.support:recyclerview-v7:28.0.0'
+    implementation 'com.android.support:cardview-v7:28.0.0'
+    implementation 'com.android.support:design:28.0.0'
+
 }

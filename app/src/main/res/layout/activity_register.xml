@@ -25,7 +25,7 @@
                 android:layout_height="wrap_content"
                 android:text="Daftar" android:textColor="@android:color/black"
                 android:textSize="22sp"
-                android:gravity="center"/>
+                android:gravity="center_horizontal"/>
 
         </android.support.v7.widget.Toolbar>
 

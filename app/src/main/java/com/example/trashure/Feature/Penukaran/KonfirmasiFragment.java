@@ -36,15 +36,16 @@ import java.util.HashMap;
 
 public class KonfirmasiFragment extends Fragment {
 
-    private String jenisLayanan,pulsa,harga,nomor,provider,mySaldo="";
+    private String jenisLayanan,pulsa,harga,nomor,provider,mySaldo="",itemCount;
     private TextView tv_jelay,tv_nomor,tv_pulsa,tv_harga,tv_provider;
     private Toolbar toolbar;
-    private DatabaseReference databaseReference,transaksiReference,counterReference;
+    private DatabaseReference databaseReference,transaksiReference;
     private FirebaseAuth mAuth;
     private Button btnTukar;
-    private int counter;
+    private int counter,notif;
     private BottomNavigationView bottomNavigationView;
     private BerhasilPenukaranFragment berhasilPenukaranFragment;
+    private TextView getChildren;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -95,6 +96,7 @@ public class KonfirmasiFragment extends Fragment {
         transaksiReference = FirebaseDatabase.getInstance().getReference().child("Transaksi").child(mAuth.getCurrentUser().getUid());
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_konfirmasi);
         setToolbar();
+        getChildren = (TextView) getActivity().findViewById(R.id.getChildren);
         btnTukar = (Button) getActivity().findViewById(R.id.btn_tukar_konfirmasi);
         tv_harga = (TextView) getActivity().findViewById(R.id.tv_get_harga);
         tv_jelay = (TextView) getActivity().findViewById(R.id.tv_get_jelay);
@@ -116,24 +118,6 @@ public class KonfirmasiFragment extends Fragment {
 
         pulsa = pemisah(pulsa);
         harga = pemisah(harga);
-
-        transaksiReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    if(!dataSnapshot.child("counter").getValue().toString().isEmpty()){
-                        setCounter(Integer.valueOf(dataSnapshot.child("counter").getValue().toString()));
-                    }else{
-                        setCounter(1);
-                    }
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-            }
-        });
 
         Log.d("HARGACHECKER",harga);
         btnTukar.setOnClickListener(new View.OnClickListener() {
@@ -162,31 +146,27 @@ public class KonfirmasiFragment extends Fragment {
     }
 
     private void tukarActivity(){
+        transaksiReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()){
+                    getChildren.setText(String.valueOf(dataSnapshot.getChildrenCount()));
+                }else{
+                    getChildren.setText("0");
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        Log.d("LOGGG!!!",getChildren.getText().toString());
         mAuth.updateCurrentUser(mAuth.getCurrentUser()).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     HashMap userHash = new HashMap();
-                    HashMap transaksiHash = new HashMap();
-                    HashMap counterSS = new HashMap();
-
-                    if(counter==0){
-                        counterSS.put("counter",1);
-                        transaksiReference.updateChildren(counterSS).addOnCompleteListener(new OnCompleteListener() {
-                            @Override
-                            public void onComplete(@NonNull Task task) {
-                                Toast.makeText(getActivity(), "Penukaran Berhasil!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }else{
-                        counterSS.put("counter",counter+1);
-                        transaksiReference.updateChildren(counterSS).addOnCompleteListener(new OnCompleteListener() {
-                            @Override
-                            public void onComplete(@NonNull Task task) {
-                                Toast.makeText(getActivity(), "Penukaran Berhasil!", Toast.LENGTH_SHORT).show();
-                            }
-                        });
-                    }
 
                     userHash.put("saldo",(Integer.valueOf(mySaldo)-Integer.valueOf(harga)));
                     databaseReference.updateChildren(userHash).addOnCompleteListener(new OnCompleteListener() {
@@ -195,23 +175,38 @@ public class KonfirmasiFragment extends Fragment {
                             Log.d("PEMBAYARAN","SUCCESS");
                         }
                     });
-                    transaksiHash.put("id_user",mAuth.getCurrentUser().getUid());
-                    transaksiHash.put("jenisPenukaran",jenisLayanan);
-                    transaksiHash.put("provider",provider);
-                    transaksiHash.put("phoneNumber",nomor);
-                    transaksiHash.put("nominal",Integer.valueOf(pulsa));
-                    transaksiHash.put("biaya",Integer.valueOf(harga));
-                    Date tgl = Calendar.getInstance().getTime();
-                    SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
-                    SimpleDateFormat tf = new SimpleDateFormat("HH.mm");
-                    String date = df.format(tgl);
-                    String time = tf.format(tgl);
-                    transaksiHash.put("tanggal_penukaran",date);
-                    transaksiHash.put("jam_penukaran",time);
-                    transaksiReference.child(String.valueOf(counter)).updateChildren(transaksiHash).addOnCompleteListener(new OnCompleteListener() {
+
+                    databaseReference.addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onComplete(@NonNull Task task) {
-                            Toast.makeText(getActivity(), "Penukaran Berhasil!", Toast.LENGTH_SHORT).show();
+                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                            HashMap transaksiHash = new HashMap();
+                            transaksiHash.put("id",getChildren.getText().toString());
+                            transaksiHash.put("id_user",mAuth.getCurrentUser().getUid());
+                            transaksiHash.put("jenisPenukaran",jenisLayanan);
+                            transaksiHash.put("provider",provider);
+                            transaksiHash.put("phoneNumber",nomor);
+                            transaksiHash.put("nominal",Integer.valueOf(pulsa));
+                            transaksiHash.put("biaya",Integer.valueOf(harga));
+                            Date tgl = Calendar.getInstance().getTime();
+                            SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+                            SimpleDateFormat tf = new SimpleDateFormat("HH.mm");
+                            String date = df.format(tgl);
+                            String time = tf.format(tgl);
+                            transaksiHash.put("tanggal_penukaran",date);
+                            transaksiHash.put("jam_penukaran",time);
+                            transaksiHash.put("read",false);
+                            transaksiHash.put("sisa_saldo",dataSnapshot.child("saldo").getValue());
+                            transaksiReference.child(getChildren.getText().toString()).updateChildren(transaksiHash).addOnCompleteListener(new OnCompleteListener() {
+                                @Override
+                                public void onComplete(@NonNull Task task) {
+                                    Toast.makeText(getActivity(), "Penukaran Berhasil!", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError databaseError) {
+
                         }
                     });
                 }

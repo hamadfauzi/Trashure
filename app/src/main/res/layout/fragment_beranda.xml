@@ -35,6 +35,20 @@
                         android:layout_toLeftOf="@+id/setting"
                         android:layout_marginRight="24dp"
                         android:layout_centerVertical="true"/>
+                    <com.nex3z.notificationbadge.NotificationBadge
+                        android:id="@+id/notif_badge"
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:layout_toRightOf="@id/notifikasi"
+                        android:layout_alignTop="@id/notifikasi"
+                        android:layout_marginLeft="-38dp"
+                        android:layout_marginTop="-3dp"
+                        app:badgeTextSize="6sp"
+                        app:badgeBackground="@drawable/bg_badge"
+                        app:maxTextLength="2"
+                        >
+
+                    </com.nex3z.notificationbadge.NotificationBadge>
                     <ImageButton
                         android:id="@+id/setting"
                         android:layout_width="20dp"
@@ -53,11 +67,15 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="28dp"
             android:background="@drawable/bg_menu_beranda"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_below="@+id/toolbar_beranda"
             >
-
+            <TextView
+                android:id="@+id/getStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
             <TextView
                 android:id="@+id/dompet"
                 android:layout_width="wrap_content"
@@ -89,8 +107,8 @@
             android:layout_width="match_parent"
             android:layout_height="70dp"
             android:background="@drawable/bg_menu_green"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_below="@+id/layout_beranda_1"
             android:weightSum="12">
             <LinearLayout
@@ -156,8 +174,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/bg_white"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="16dp"
             android:layout_marginTop="20dp"
             android:layout_below="@+id/layout_beranda_2"
             >
@@ -195,41 +213,42 @@
             android:layout_marginTop="20dp"
             android:layout_marginBottom="16dp"
             android:layout_below="@+id/layout_beranda_3">
-            <TextView
-                android:id="@+id/setoran"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:id="@+id/setoran_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:id="@+id/setoran"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/setoran"
+                    android:textSize="20sp"
+                    android:textColor="@color/colorText"
+                    android:textStyle="bold"
+                    />
+                <TextView
+                    android:id="@+id/expand"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/lihat_semua"
+                    android:textSize="14sp"
+                    android:textColor="@color/colorText"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:clickable="true"
+                    />
+            </RelativeLayout>
+            <android.support.v7.widget.RecyclerView
+                android:layout_marginTop="24dp"
+                android:id="@+id/rvListSetoran"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/setoran"
-                android:textSize="20sp"
-                android:textColor="@color/colorText"
-                android:textStyle="bold"
-                />
-            <TextView
-                android:id="@+id/expand"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/lihat_semua"
-                android:textSize="14sp"
-                android:textColor="@color/colorText"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                />
-
+                tools:listitem="@layout/list_setoran"
+                android:layout_below="@+id/setoran_layout"
+                tools:itemCount="4"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
+            </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvListNotes"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:layout_marginTop="8dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/list_setoran"
-            android:layout_below="@+id/layout_beranda_4"
-            tools:itemCount="4"
-            app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        </android.support.v7.widget.RecyclerView>
 
         <RelativeLayout
             android:id="@+id/layout_beranda_5"
@@ -240,7 +259,7 @@
             android:layout_marginRight="16dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="16dp"
-            android:layout_below="@id/rvListNotes">
+            android:layout_below="@id/layout_beranda_4">
             <TextView
                 android:id="@+id/tips"
                 android:layout_width="wrap_content"

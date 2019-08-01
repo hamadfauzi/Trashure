@@ -21,13 +21,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.trashure.R;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,25 +40,28 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-
-import me.dm7.barcodescanner.zxing.ZXingScannerView;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
 
 
 public class ScanFragment extends Fragment{
 
-    private ScanFragment scanFragment;
     private BerhasilScanFragment berhasilScanFragment;
     private SurfaceView sv_scanner;
     private CameraSource cameraSource;
     private BarcodeDetector barcodeDetector;
-    private String scanResult="";
-    private DatabaseReference databaseReference;
+    private String scanResult="",tBagConnect="";
+    private DatabaseReference databaseReference,setoranRefs;
     private String[] id_trashbag;
     private BottomNavigationView bottomNavigationView;
     private EditText et_id;
     private Button btn_scan;
+    private DatabaseReference userRefs;
     private boolean cek;
+    private TextView setoranCount;
 
 
     @Override
@@ -70,10 +78,12 @@ public class ScanFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
+        fetching();
         initialize();
     }
 
-    private void initialize(){
+    private void fetching(){
+        //Fetching Trashbag ID From Database
         databaseReference = FirebaseDatabase.getInstance().getReference().child("Trashbag");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -94,11 +104,31 @@ public class ScanFragment extends Fragment{
 
             }
         });
-        scanFragment = new ScanFragment();
-        btn_scan = (Button) getActivity().findViewById(R.id.btn_scan);
-        et_id = (EditText) getActivity().findViewById(R.id.edit_id) ;
+
+        //Fetching Trashbag whose connected with user
+        userRefs = FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        userRefs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                settBagConnect(dataSnapshot.child("trashbag").getValue().toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        setoranCount = (TextView) getActivity().findViewById(R.id.setoranCount);
+        setoranRefs = FirebaseDatabase.getInstance().getReference().child("Setoran").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+    }
+
+    private void initialize(){
+
         bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.bottomNavBar);
         bottomNavigationView.setVisibility(View.VISIBLE);
+        btn_scan = (Button) getActivity().findViewById(R.id.btn_scan);
+        et_id = (EditText) getActivity().findViewById(R.id.edit_id) ;
         berhasilScanFragment = new BerhasilScanFragment();
         sv_scanner = (SurfaceView) getActivity().findViewById(R.id.QRScanner);
         barcodeDetector = new BarcodeDetector.Builder(getActivity()).setBarcodeFormats(Barcode.QR_CODE).build();
@@ -146,13 +176,33 @@ public class ScanFragment extends Fragment{
                     Log.d("ISI ID TRASHBAG",id_trashbag[0]+","+id_trashbag[1]);
                     for (int i = 0; i < id_trashbag.length; i++) {
                         if (!scanResult.equalsIgnoreCase(id_trashbag[i])){
-                            Log.d("QRCODE SALAH!","QRCODE TIDAK TERDETEKSI");
-                            sentToScan();
+                            cek = false;
                         }else{
-                            berhasilScanFragment.setId(scanResult);
-                            sentToSuccess();
+                            cek = true;
                             break;
                         }
+                    }
+                    if (!cek){
+                        Log.d("QRCODE SALAH!","QRCODE TIDAK TERDETEKSI");
+                        sentToScan();
+                    }else{
+                        berhasilScanFragment.setId(scanResult);
+                        FirebaseAuth.getInstance().updateCurrentUser(FirebaseAuth.getInstance().getCurrentUser()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()){
+                                    HashMap userMap = new HashMap();
+                                    userMap.put("trashbag",scanResult);
+                                    userRefs.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
+                                        @Override
+                                        public void onComplete(@NonNull Task task) {
+                                            Log.d("TAG","SCAN SUCCES");
+                                        }
+                                    });
+                                }
+                            }
+                        });
+                        sentToSuccess();
                     }
                 }
             }
@@ -160,19 +210,78 @@ public class ScanFragment extends Fragment{
         btn_scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.isEmpty(et_id.getText())){
-                    Toast.makeText(getActivity(), "ID Trashbag harus diisi!", Toast.LENGTH_SHORT).show();
-                }else{
-                    for (int i = 0; i < id_trashbag.length; i++) {
-                        if (id_trashbag[i].equalsIgnoreCase(et_id.getText().toString())){
-                            berhasilScanFragment.setId(et_id.getText().toString().toUpperCase());
-                            sentToSuccess();
-                            break;
-                        }else{
-                            Toast.makeText(getActivity(), "ID Trashbag salah!", Toast.LENGTH_SHORT).show();
-                        }
+                checker();
+                scanActivity();
+            }
+        });
+    }
+
+    private void checker(){
+        if (TextUtils.isEmpty(et_id.getText())){
+            Toast.makeText(getActivity(), "ID Trashbag harus diisi!", Toast.LENGTH_SHORT).show();
+        }else{
+            for (int i = 0; i < id_trashbag.length; i++) {
+                if (id_trashbag[i].equalsIgnoreCase(et_id.getText().toString())){
+                    cek = true;
+                    break;
+                }else cek = false;
+            }
+            if (cek){
+                berhasilScanFragment.setId(et_id.getText().toString().toUpperCase());
+                HashMap userMap = new HashMap();
+                userMap.put("trashbag",et_id.getText().toString().toUpperCase());
+                userRefs.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
+                    @Override
+                    public void onComplete(@NonNull Task task) {
+                        Log.d("TAG","SCAN SUCCESS");
                     }
+                });
+                sentToSuccess();
+            }else{
+                Toast.makeText(getActivity(), "ID Trashbag Salah!", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void scanActivity(){
+        //Fetching Trashbag whose connected with user
+        setoranRefs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("COUNTINGG!!",String.valueOf(dataSnapshot.getChildrenCount()));
+                if (dataSnapshot.exists()){
+                    setoranCount.setText(String.valueOf(dataSnapshot.getChildrenCount()));
+                }else{
+                    setoranCount.setText("0");
                 }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        setoranRefs.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                Log.d("LOG!!",setoranCount.getText().toString());
+                Date now = Calendar.getInstance().getTime();
+                SimpleDateFormat dateFormat1 = new SimpleDateFormat("dd/MM/yyyy");
+                String date = dateFormat1.format(now);
+
+                HashMap setoranMap = new HashMap();
+                setoranMap.put("id",setoranCount.getText().toString());
+                setoranMap.put("id_trashbag",et_id.getText().toString().toUpperCase());
+                setoranMap.put("id_user", FirebaseAuth.getInstance().getCurrentUser().getUid());
+                setoranMap.put("date",date);
+                setoranMap.put("status","Proses");
+                setoranRefs.child(setoranCount.getText().toString()).updateChildren(setoranMap);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
             }
         });
     }
@@ -184,7 +293,7 @@ public class ScanFragment extends Fragment{
     }
     private void sentToScan(){
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frameFragment,scanFragment);
+        fragmentTransaction.replace(R.id.frameFragment,this);
         fragmentTransaction.commit();
     }
 
@@ -192,5 +301,9 @@ public class ScanFragment extends Fragment{
     public void onResume() {
         super.onResume();
         initialize();
+    }
+
+    public void settBagConnect(String tBagConnect) {
+        this.tBagConnect = tBagConnect;
     }
 }

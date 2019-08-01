@@ -139,6 +139,7 @@
                         android:background="@android:color/transparent"
                         android:paddingTop="4dp"
                         android:paddingLeft="0dp"
+                        android:inputType="number"
                         />
                 </RelativeLayout>
             </LinearLayout>

@@ -159,12 +159,13 @@ public class RegisterActivity extends AppCompatActivity {
                                         userMap.put("email",user.getEmail());
                                         userMap.put("bod","-");
                                         userMap.put("displaypicture",user.getPhotoUrl().toString());
+                                        userMap.put("trashbag","Kosong");
                                         userRefs.child(user.getUid()).updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
                                             @Override
                                             public void onComplete(@NonNull Task task) {
                                                 if(task.isSuccessful())
                                                 {
-                                                    Toast.makeText(RegisterActivity.this, "Login Berhasil", Toast.LENGTH_SHORT).show();
+                                                    Toast.makeText(RegisterActivity.this, "Daftar Berhasil", Toast.LENGTH_SHORT).show();
                                                     mDialog.dismiss();
                                                     Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
                                                     startActivity(mainIntent);
@@ -396,6 +397,7 @@ public class RegisterActivity extends AppCompatActivity {
                                         userMap.put("email",user.getEmail());
                                         userMap.put("bod","-");
                                         userMap.put("displaypicture",user.getPhotoUrl().toString());
+                                        userMap.put("trashbag","Kosong");
                                         userRefs.child(user.getUid()).updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
                                             @Override
                                             public void onComplete(@NonNull Task task) {
@@ -466,6 +468,7 @@ public class RegisterActivity extends AppCompatActivity {
                         userMap.put("level","-");
                         userMap.put("email",email);
                         userMap.put("bod","-");
+                        userMap.put("trashbag","Kosong");
                         dummyDispPict.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                                 @Override
                                 public void onSuccess(Uri uri) {

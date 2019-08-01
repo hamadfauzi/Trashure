@@ -16,18 +16,38 @@ import com.example.trashure.Feature.Beranda.BerandaFragment;
 import com.example.trashure.Feature.Harga.HargaFragment;
 import com.example.trashure.Feature.Penukaran.PenukaranFragment;
 import com.example.trashure.Feature.Scan.ScanFragment;
-
+import com.example.trashure.Feature.Scan.TrashbagTersambungFragment;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 
 public class MainActivity extends AppCompatActivity {
 
     BottomNavigationView bottomNavigationView;
     public static Context contextOfApplication;
+    private DatabaseReference databaseReference;
+    private String tBag="";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("User").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                tBag = dataSnapshot.child("trashbag").getValue().toString();
+            }
 
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
         contextOfApplication = getApplicationContext();
         Window window = this.getWindow();
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
@@ -41,6 +61,7 @@ public class MainActivity extends AppCompatActivity {
         final ScanFragment scanFragment = new ScanFragment();
         final BerandaFragment berandaFragment = new BerandaFragment();
         final HargaFragment hargaFragment = new HargaFragment();
+        final TrashbagTersambungFragment tersambungFragment = new TrashbagTersambungFragment();
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener()
         {
@@ -62,7 +83,11 @@ public class MainActivity extends AppCompatActivity {
                     setFragment(penukaranFragment);
                     return true;
                 } else if (id == R.id.menuScan) {
-                    setFragment(scanFragment);
+                    if (tBag.equalsIgnoreCase("kosong") || tBag.isEmpty()){
+                        setFragment(scanFragment);
+                    }else{
+                        setFragment(tersambungFragment);
+                    }
                     return true;
                 }
                 return  false;

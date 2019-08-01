@@ -37,6 +37,11 @@
             android:layout_height="0dp"
             android:layout_weight="7">
             <TextView
+                android:id="@+id/setoranCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+            <TextView
                 android:id="@+id/text-arahkan"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

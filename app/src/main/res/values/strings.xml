@@ -17,4 +17,13 @@
     <string name="tgl_setoran">24 / 04 / 2019</string>
     <string name="facebook_app_id">412402426152036</string>
     <string name="fb_login_protocol_scheme">fb412402426152036</string>
+    <string-array name="desc">
+        <item>Pulsa sebesar 1000 dengan nomor kartu</item>
+        <item>Pulsa sebesar 5000 dengan nomor kartu</item>
+        <item>Pulsa sebesar 10000 dengan nomor kartu</item>
+        <item>Pulsa sebesar 20000 dengan nomor kartu</item>
+        <item>Pulsa sebesar 50000 dengan nomor kartu</item>
+    </string-array>
+    <string name="berhasil_ditukar">berhasil ditukarkan. Sisa saldo anda sebesar Rp.</string>
+    <string name="title_transaksi">Penukaran Pulsa</string>
 </resources>

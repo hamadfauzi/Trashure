@@ -26,6 +26,11 @@
         android:layout_marginStart="18dp"
         android:layout_marginEnd="18dp"
         android:background="@drawable/bg_white">
+        <TextView
+            android:id="@+id/getChildren"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
         <LinearLayout
             android:id="@+id/layout_konf_1"
             android:layout_width="match_parent"

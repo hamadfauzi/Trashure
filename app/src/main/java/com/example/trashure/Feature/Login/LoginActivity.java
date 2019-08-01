@@ -307,6 +307,7 @@ public class LoginActivity extends AppCompatActivity{
                                         userMap.put("email",user.getEmail());
                                         userMap.put("bod","-");
                                         userMap.put("displaypicture",user.getPhotoUrl().toString());
+                                        userMap.put("trashbag","Kosong");
                                         userRefs.child(user.getUid()).updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
                                             @Override
                                             public void onComplete(@NonNull Task task) {
@@ -387,6 +388,7 @@ public class LoginActivity extends AppCompatActivity{
                                         userMap.put("email",user.getEmail());
                                         userMap.put("bod","-");
                                         userMap.put("displaypicture",user.getPhotoUrl().toString());
+                                        userMap.put("trashbag","Kosong");
                                         userRefs.child(user.getUid()).updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
                                             @Override
                                             public void onComplete(@NonNull Task task) {
