@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.trashure.Feature.Notifikasi.NotifikasiFragment;
@@ -21,6 +22,8 @@ import com.example.trashure.Feature.Notifikasi.TransaksiAdapter;
 import com.example.trashure.Feature.Notifikasi.TransaksiModel;
 import com.example.trashure.Feature.Setting.SettingFragment;
 import com.example.trashure.R;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -43,9 +46,10 @@ import static com.facebook.FacebookSdk.getApplicationContext;
 public class BerandaFragment extends Fragment{
 
     private List<SetoranModel> mLists = new ArrayList<>();
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+    private List<TipsModel> tipsList = new ArrayList<>();
+    private RecyclerView mRecyclerView,rvTips;
+    private RecyclerView.Adapter mAdapter,mTipsAdapter;
+    private RecyclerView.LayoutManager mLayoutManager,mLayoutManager2;
 
     private NotificationBadge mBadge;
     private ImageButton btnNotif, btnSetting;
@@ -53,9 +57,9 @@ public class BerandaFragment extends Fragment{
     private SettingFragment settingFragment;
     private BottomNavigationView bottomNavigationView;
     private TextView tv_saldo,tv_level,getStatus,setoranDetail;
-    private DatabaseReference userRefs,notifRefs,setoranRefs;
+    private DatabaseReference userRefs,notifRefs,setoranRefs,tipsRefs;
     private FirebaseAuth mAuth;
-
+    private FirebaseRecyclerAdapter<TipsModel,TipsViewHolder> firebaseRecyclerAdapter;
     private SetoranDetail FragmentSetoranDetail;
 
     @Override
@@ -75,9 +79,12 @@ public class BerandaFragment extends Fragment{
         eventFragmentAkun();
     }
 
+
+
     private void eventFragmentAkun() {
         initRecyclerView();
         initialize();
+
     }
 
     public void initialize(){
@@ -87,6 +94,7 @@ public class BerandaFragment extends Fragment{
         setoranRefs = FirebaseDatabase.getInstance().getReference().child("Setoran").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
         mAuth = FirebaseAuth.getInstance();
         userRefs = FirebaseDatabase.getInstance().getReference().child("User").child(mAuth.getCurrentUser().getUid());
+        tipsRefs = FirebaseDatabase.getInstance().getReference().child("Tips");
         notifRefs = FirebaseDatabase.getInstance().getReference().child("Transaksi").child(mAuth.getCurrentUser().getUid());
         mBadge = (NotificationBadge) getActivity().findViewById(R.id.notif_badge);
         btnSetting = (ImageButton) getActivity().findViewById(R.id.setting);
@@ -162,6 +170,22 @@ public class BerandaFragment extends Fragment{
             }
         });
 
+        tipsRefs.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                tipsList.clear();
+                for (DataSnapshot dsp:dataSnapshot.getChildren()){
+                    tipsList.add(new TipsModel(dsp.child("judul").getValue().toString(),dsp.child("deskripsi").getValue().toString(),dsp.child("gambar").getValue().toString(),dsp.child("tgl").getValue().toString()));
+                    mTipsAdapter.notifyDataSetChanged();
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         btnSetting.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -192,6 +216,14 @@ public class BerandaFragment extends Fragment{
         ((LinearLayoutManager) mLayoutManager).setStackFromEnd(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
         mRecyclerView.setAdapter(mAdapter);
+
+        rvTips = getActivity().findViewById(R.id.rv_tips);
+        mTipsAdapter = new TipsAdapter(tipsList,getActivity().getApplicationContext(),getActivity());
+        mLayoutManager2 = new LinearLayoutManager(getActivity(),LinearLayoutManager.HORIZONTAL,true);
+        ((LinearLayoutManager) mLayoutManager2).setStackFromEnd(true);
+        rvTips.setLayoutManager(mLayoutManager2);
+        rvTips.setAdapter(mTipsAdapter);
+
     }
 
     private void sentToSetting(){
@@ -210,6 +242,25 @@ public class BerandaFragment extends Fragment{
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.frameFragment,FragmentSetoranDetail,null).addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    public static class TipsViewHolder extends RecyclerView.ViewHolder
+    {
+        View mView;
+        public TipsViewHolder(View itemView) {
+            super(itemView);
+            mView = itemView;
+        }
+
+        public void setJudulTips(String judulP) {
+            TextView judul = (TextView) mView.findViewById(R.id.tv_judul_tips);
+            judul.setText(judulP);
+        }
+
+        public void setPostImage(Context ctx, String image1) {
+            ImageView image = (ImageView) mView.findViewById(R.id.iv_tips);
+            Picasso.with(ctx).load(image1).into(image);
+        }
     }
 
 }

@@ -2,20 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-
+    android:id="@+id/rl_tips"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
         android:layout_width="140dp"
+        android:layout_margin="10dp"
         android:layout_height="140dp">
 
         <ImageView
+            android:id="@+id/iv_tips"
             android:layout_width="140dp"
             android:layout_height="140dp"
             android:scaleType="fitXY"
             android:src="@drawable/dummy"/>
 
         <TextView
+            android:id="@+id/tv_judul_tips"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:translationZ="90dp"
@@ -23,6 +26,7 @@
             android:layout_marginBottom="10dp"
             android:maxLength="60"
             android:layout_marginStart="4dp"
+            android:textSize="18sp"
             android:text="Judul Tips"
             android:textColor="@android:color/white"
             android:textStyle="bold"/>

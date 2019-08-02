@@ -272,9 +272,11 @@
                 />
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_tips"
+                android:layout_below="@id/tips"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp">
+                >
 
 
             </android.support.v7.widget.RecyclerView>
