@@ -40,7 +40,11 @@ public class MainActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                tBag = dataSnapshot.child("trashbag").getValue().toString();
+                if(dataSnapshot.hasChild("trashbag"))
+                {
+                    tBag = dataSnapshot.child("trashbag").getValue().toString();
+                }
+
             }
 
             @Override

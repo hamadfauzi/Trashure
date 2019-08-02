@@ -110,7 +110,10 @@ public class ScanFragment extends Fragment{
         userRefs.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                settBagConnect(dataSnapshot.child("trashbag").getValue().toString());
+                if(dataSnapshot.hasChild("trashbag"))
+                {
+                    settBagConnect(dataSnapshot.child("trashbag").getValue().toString());
+                }
             }
 
             @Override

@@ -114,7 +114,11 @@ public class BerandaFragment extends Fragment{
                     String mySaldo = NumberFormat.getInstance(Locale.ITALIAN).format(Integer.valueOf(saldo));
                     tv_level.setText(" "+level);
                     tv_saldo.setText("Rp."+mySaldo);
-                    getStatus.setText(dataSnapshot.child("trashbag").getValue().toString());
+                    if(dataSnapshot.hasChild("trashbag"))
+                    {
+                        getStatus.setText(dataSnapshot.child("trashbag").getValue().toString());
+                    }
+
                 }
             }
 

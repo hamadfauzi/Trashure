@@ -26,6 +26,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.trashure.Feature.Register.RegisterActivity;
+import com.example.trashure.Feature.ResetPassword.ResetPasswordActivity;
 import com.example.trashure.MainActivity;
 import com.example.trashure.R;
 import com.facebook.AccessToken;
@@ -133,6 +134,15 @@ public class LoginActivity extends AppCompatActivity{
         tvDaftar = (TextView) findViewById(R.id.tv_daftar);
         tvLupaPassword = (TextView) findViewById(R.id.tv_lupa_password);
         btnFacebookView = (ImageView) findViewById(R.id.btn_facebook);
+
+        tvLupaPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent resetIntent = new Intent(LoginActivity.this, ResetPasswordActivity.class);
+                startActivity(resetIntent);
+                finish();
+            }
+        });
 
         int tintColorDark = ContextCompat.getColor(getApplicationContext(), android.R.color.darker_gray);
         int tintColorDrawable = ContextCompat.getColor(getApplicationContext(), R.color.colorDrawable);

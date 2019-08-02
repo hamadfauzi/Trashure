@@ -17,6 +17,7 @@
         <activity android:name=".Feature.Register.RegisterActivity"
             android:parentActivityName=".Feature.Login.LoginActivity" />
         <activity android:name=".MainActivity" />
+        <activity android:name=".Feature.ResetPassword.ResetPasswordActivity" />
         <activity android:name=".Feature.Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
