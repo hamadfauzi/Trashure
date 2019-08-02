@@ -117,7 +117,7 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center_vertical"
                 android:gravity="left"
-                android:layout_weight="6"
+                android:layout_weight="5"
                 android:layout_marginLeft="16dp">
                 <TextView
                     android:id="@+id/ket_level"
@@ -148,7 +148,7 @@
                 android:orientation="horizontal"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_horizontal"
-                android:layout_weight="6">
+                android:layout_weight="7">
                 <TextView
                     android:id="@+id/ket_trashbag"
                     android:layout_width="wrap_content"
@@ -163,6 +163,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text=" Tidak Terhubung"
+                    android:textAlignment="center"
                     android:textColor="@android:color/white"
                     />
 
@@ -269,6 +270,14 @@
                 android:textColor="@color/colorText"
                 android:textStyle="bold"
                 />
+
+            <android.support.v7.widget.RecyclerView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp">
+
+
+            </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
         <in.goodiebag.carouselpicker.CarouselPicker
             android:id="@+id/carouselPicker"

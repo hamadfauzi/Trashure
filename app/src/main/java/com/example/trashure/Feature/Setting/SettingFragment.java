@@ -12,14 +12,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.RelativeLayout;
 
 import com.example.trashure.Feature.Beranda.BerandaFragment;
+import com.example.trashure.Feature.Notifikasi.NotifikasiFragment;
 import com.example.trashure.R;
 
 public class SettingFragment extends Fragment {
 
     private BottomNavigationView bottomNavigationView;
     private Toolbar toolbar;
+    private NotifikasiFragment notifikasiFragment;
+    private RelativeLayout rlNotifikasi;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -51,7 +55,9 @@ public class SettingFragment extends Fragment {
 
     public void initialize(){
         toolbar = (Toolbar) getActivity().findViewById(R.id.toolbar_setting);
+        rlNotifikasi  = (RelativeLayout) getActivity().findViewById(R.id.layout_notif);
         setToolbar();
+        notifikasiFragment = new NotifikasiFragment();
         bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.bottomNavBar);
         bottomNavigationView.setVisibility(View.GONE);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
@@ -60,6 +66,19 @@ public class SettingFragment extends Fragment {
                 getActivity().onBackPressed();
             }
         });
+        rlNotifikasi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                sentToNotif();
+            }
+        });
+
+    }
+
+    private void sentToNotif(){
+        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+        fragmentTransaction.replace(R.id.frameFragment,notifikasiFragment,null).addToBackStack(null);
+        fragmentTransaction.commit();
     }
 
 }
