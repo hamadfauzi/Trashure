@@ -283,6 +283,7 @@
                 android:textStyle="bold"
                 android:textColor="@android:color/white"
                 android:layout_below="@+id/ll3"
+                android:padding="10dp"
                 />
         </RelativeLayout>
 

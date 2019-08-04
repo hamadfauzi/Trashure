@@ -206,6 +206,7 @@ public class ScanFragment extends Fragment{
                             }
                         });
                         sentToSuccess();
+                        scanActivity();
                     }
                 }
             }

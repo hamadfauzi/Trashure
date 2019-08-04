@@ -17,6 +17,8 @@
         app:menu="@menu/menu_bottom_navigation"
         app:labelVisibilityMode="labeled"
         android:layout_height="wrap_content"
+        app:itemTextAppearanceInactive="@style/BottomNavigationView"
+        app:itemTextAppearanceActive="@style/BottomNavigationView.Active"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"></android.support.design.widget.BottomNavigationView>
 

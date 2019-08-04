@@ -7,10 +7,20 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/SFTextViewStyle</item>
+        <item name="buttonStyle">@style/SFButtonStyle</item>
+        <item name="android:editTextStyle">@style/SFEditTextStyle</item>
+    </style>
+
+    <style name="SFEditTextStyle" parent="android:Widget.EditText">
+        <item name="android:fontFamily">@font/sf_pro_display_regular</item>
     </style>
 
     <style name="SFTextViewStyle" parent="android:Widget.TextView">
-        <item name="android:fontFamily">@font/sf_pro_display</item>
+        <item name="android:fontFamily">@font/sf_pro_display_regular</item>
+    </style>
+
+    <style name="SFButtonStyle" parent="android:Widget.Button">
+        <item name="android:fontFamily">@font/sf_pro_display_regular</item>
     </style>
 
     <style name = "AppTheme.NoActionBar" parent = "@android:style/Theme.Holo.Light">
@@ -26,5 +36,15 @@
     <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
         <!-- Customize color of navigation drawer icon and back arrow -->
         <item name="colorControlNormal">@color/colorText</item>
+    </style>
+
+    <style name="BottomNavigationView" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">11sp</item>
+        <item name="android:fontFamily">@font/sf_pro_display_regular</item>
+    </style>
+
+    <style name="BottomNavigationView.Active" parent="@style/TextAppearance.AppCompat.Caption">
+        <item name="android:textSize">12sp</item>
+        <item name="android:fontFamily">@font/sf_pro_display_regular</item>
     </style>
 </resources>

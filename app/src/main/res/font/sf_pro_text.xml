@@ -8,7 +8,7 @@
     <font
         android:fontWeight="1000"
         android:fontStyle="italic"
-        android:font="@font/sf_pro_text_blackItalic"
+        android:font="@font/sf_pro_text_blackitalic"
         />
     <font
         android:fontWeight="700"
@@ -18,7 +18,7 @@
     <font
         android:fontWeight="700"
         android:fontStyle="italic"
-        android:font="@font/sf_pro_text_boldItalic"
+        android:font="@font/sf_pro_text_bolditalic"
         />
     <font
         android:fontWeight="900"
@@ -28,7 +28,7 @@
     <font
         android:fontWeight="900"
         android:fontStyle="italic"
-        android:font="@font/sf_pro_text_heavyItalic"
+        android:font="@font/sf_pro_text_heavyitalic"
         />
     <font
         android:fontWeight="200"
@@ -38,7 +38,7 @@
     <font
         android:fontWeight="200"
         android:fontStyle="italic"
-        android:font="@font/sf_pro_text_lightItalic"
+        android:font="@font/sf_pro_text_lightitalic"
         />
     <font
         android:fontWeight="500"
@@ -48,7 +48,7 @@
     <font
         android:fontWeight="500"
         android:fontStyle="italic"
-        android:font="@font/sf_pro_text_mediumItalic"
+        android:font="@font/sf_pro_text_mediumitalic"
         />
     <font
         android:fontWeight="400"
@@ -58,7 +58,7 @@
     <font
         android:fontWeight="400"
         android:fontStyle="italic"
-        android:font="@font/sf_pro_text_regularItalic"
+        android:font="@font/sf_pro_text_regularitalic"
         />
     <font
         android:fontWeight="600"
@@ -68,7 +68,7 @@
     <font
         android:fontWeight="600"
         android:fontStyle="italic"
-        android:font="@font/sf_pro_text_semiboldItalic"
+        android:font="@font/sf_pro_text_semibolditalic"
         />
     <font
         android:fontWeight="100"
@@ -78,7 +78,7 @@
     <font
         android:fontWeight="100"
         android:fontStyle="italic"
-        android:font="@font/sf_pro_text_thinItalic"
+        android:font="@font/sf_pro_text_thinitalic"
         />
     <font
         android:fontWeight="150"
@@ -88,6 +88,6 @@
     <font
         android:fontWeight="150"
         android:fontStyle="italic"
-        android:font="@font/sf_pro_text_ultralightItalic"
+        android:font="@font/sf_pro_text_ultralightitalic"
         />
 </font-family>

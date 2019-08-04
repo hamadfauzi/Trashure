@@ -44,13 +44,14 @@
         <Button
             android:id="@+id/btn_kembali"
             android:layout_width="match_parent"
-            android:layout_height="56dp"
+            android:layout_height="wrap_content"
             android:background="@drawable/bg_btn_green"
             android:layout_marginStart="95dp"
             android:layout_marginTop="36dp"
             android:layout_marginEnd="95dp"
             android:text="Kembali"
             android:textColor="@android:color/white"
-            android:textSize="16sp"/>
+            android:textSize="16sp"
+            android:padding="10dp"/>
     </LinearLayout>
 </RelativeLayout>

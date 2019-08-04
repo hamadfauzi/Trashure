@@ -251,6 +251,8 @@
                 android:textColor="@android:color/white"
                 android:layout_below="@+id/separator_5"
                 android:layout_marginTop="50dp"
+                android:padding="10dp"
+                android:layout_marginBottom="20dp"
                 />
         </RelativeLayout>
 

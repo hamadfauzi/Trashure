@@ -115,7 +115,8 @@
                 android:textStyle="bold"
                 android:textColor="@android:color/white"
                 android:background="@drawable/bg_btn2"
-                android:layout_marginTop="40dp"/>
+                android:layout_marginTop="40dp"
+                android:padding="10dp"/>
 
             <TextView
                 android:id="@+id/tv1"
@@ -131,7 +132,8 @@
                 android:layout_width="wrap_content"
                 android:layout_centerHorizontal="true"
                 android:layout_below="@id/tv1"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp">
 
                 <com.facebook.login.widget.LoginButton
                     android:id="@+id/login_button"
@@ -141,7 +143,6 @@
                     android:layout_toRightOf="@id/btn_google"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/facebook_button"
-                    android:layout_marginTop="10dp"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:scaleType="centerInside"/>
@@ -153,7 +154,6 @@
                     android:layout_toRightOf="@id/btn_google"
                     android:layout_marginStart="20dp"
                     android:background="@drawable/facebook_button"
-                    android:layout_marginTop="10dp"
                     android:layout_centerHorizontal="true"
                     android:layout_gravity="center_horizontal"
                     android:scaleType="centerInside"/>
@@ -162,8 +162,7 @@
                     android:id="@+id/btn_google"
                     android:layout_width="50dp"
                     android:layout_height="50dp"
-                    android:background="@drawable/google_button"
-                    android:layout_marginTop="10dp" />
+                    android:background="@drawable/google_button"/>
 
             </RelativeLayout>
 
