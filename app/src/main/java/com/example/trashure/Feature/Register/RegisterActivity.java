@@ -307,8 +307,17 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void setToolbar() {
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(RegisterActivity.this,LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     public void registerWithGoogle()
@@ -507,5 +516,4 @@ public class RegisterActivity extends AppCompatActivity {
             });
         }
     }
-
 }

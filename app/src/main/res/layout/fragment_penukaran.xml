@@ -14,7 +14,7 @@
         <android.support.v7.widget.Toolbar
             android:id="@+id/toolbar_tukar"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="?actionBarSize"
             android:background="@android:color/white">
             <TextView
                 android:layout_width="wrap_content"
@@ -30,52 +30,51 @@
             android:layout_marginStart="18dp"
             android:layout_marginEnd="18dp"
             android:layout_marginTop="30dp"
-            android:background="@drawable/bg_white"
+            android:layout_marginBottom="30dp"
             android:orientation="vertical"
             android:layout_below="@+id/toolbar_tukar">
 
-            <LinearLayout
+            <RelativeLayout
+                android:layout_marginTop="16dp"
                 android:id="@+id/ll_pulsa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:layout_weight="10"
-                android:orientation="horizontal">
+                android:background="@drawable/bg_white_top"
+                android:gravity="center_vertical"
+                android:padding="20dp">
 
                 <ImageView
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_phone"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"/>
+                    android:id="@+id/ic_pulsa"
+                    android:layout_width="48dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/ic_phone"/>
 
                 <TextView
-                    android:layout_width="0dp"
-                    android:layout_weight="7"
+                    android:id="@+id/desc_pulsa"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="PULSA"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginEnd="10dp"
+                    android:text="Pulsa"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:textColor="@android:color/black"/>
+                    android:textColor="@android:color/black"
+                    android:layout_toRightOf="@id/ic_pulsa"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"/>
 
                 <ImageView
                     android:id="@+id/iv_penukaran_pulsa"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="20dp"
-                    android:src="@drawable/ic_arrow_drop_down"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"/>
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_up"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
 
-            </LinearLayout>
+            </RelativeLayout>
 
             <com.github.aakira.expandablelayout.ExpandableRelativeLayout
 
                 android:id="@+id/expandableLayout"
-                android:background="@drawable/bg_white"
+                android:background="@drawable/bg_white_down"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:ael_expanded="true"
@@ -185,6 +184,80 @@
                 </LinearLayout>
 
             </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/l2_dana"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_white"
+                android:gravity="center_vertical"
+                android:padding="20dp"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:id="@+id/ic_dana"
+                    android:layout_width="48dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/dana_logo"/>
+
+                <TextView
+                    android:id="@+id/desc_dana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dana"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:layout_toRightOf="@id/ic_dana"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"/>
+
+                <ImageView
+                    android:id="@+id/iv_penukaran_dana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_down"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/l3_link"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_white"
+                android:gravity="center_vertical"
+                android:padding="20dp"
+                android:layout_marginTop="16dp">
+
+                <ImageView
+                    android:id="@+id/ic_link"
+                    android:layout_width="48dp"
+                    android:layout_height="24dp"
+                    android:src="@drawable/linkaja_logo"/>
+
+                <TextView
+                    android:id="@+id/desc_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="LinkAja"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:textColor="@android:color/black"
+                    android:layout_toRightOf="@id/ic_link"
+                    android:layout_centerVertical="true"
+                    android:layout_marginStart="20dp"/>
+
+                <ImageView
+                    android:id="@+id/iv_penukaran_link"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_arrow_down"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"/>
+
+            </RelativeLayout>
 
         </LinearLayout>
     </RelativeLayout>

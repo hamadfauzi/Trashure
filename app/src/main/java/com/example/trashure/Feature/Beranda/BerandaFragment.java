@@ -22,8 +22,6 @@ import com.example.trashure.Feature.Notifikasi.TransaksiAdapter;
 import com.example.trashure.Feature.Notifikasi.TransaksiModel;
 import com.example.trashure.Feature.Setting.SettingFragment;
 import com.example.trashure.R;
-import com.firebase.ui.database.FirebaseRecyclerAdapter;
-import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -59,7 +57,6 @@ public class BerandaFragment extends Fragment{
     private TextView tv_saldo,tv_level,getStatus,setoranDetail;
     private DatabaseReference userRefs,notifRefs,setoranRefs,tipsRefs;
     private FirebaseAuth mAuth;
-    private FirebaseRecyclerAdapter<TipsModel,TipsViewHolder> firebaseRecyclerAdapter;
     private SetoranDetail FragmentSetoranDetail;
 
     @Override

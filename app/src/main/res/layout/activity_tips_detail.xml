@@ -5,8 +5,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Feature.Beranda.TipsDetail">
-
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_tips_detail"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="@android:color/white"
+        android:theme="@style/ToolbarTheme">
+    </android.support.v7.widget.Toolbar>
     <TextView
+        android:layout_below="@id/toolbar_tips_detail"
         android:id="@+id/tv_judul_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -21,7 +28,7 @@
         android:id="@+id/iv_detail_tips"
         android:layout_below="@id/tv_tanggal"
         android:layout_width="match_parent"
-        android:layout_height="280dp"
+        android:layout_height="200dp"
         android:scaleType="fitXY"
         android:layout_marginTop="10dp"
         android:src="@drawable/dummy"

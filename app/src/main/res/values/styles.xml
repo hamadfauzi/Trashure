@@ -6,6 +6,11 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:textViewStyle">@style/SFTextViewStyle</item>
+    </style>
+
+    <style name="SFTextViewStyle" parent="android:Widget.TextView">
+        <item name="android:fontFamily">@font/sf_pro_display</item>
     </style>
 
     <style name = "AppTheme.NoActionBar" parent = "@android:style/Theme.Holo.Light">

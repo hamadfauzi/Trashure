@@ -2,6 +2,7 @@ package com.example.trashure.Feature.Beranda;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.widget.CardView;
@@ -14,7 +15,9 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.trashure.R;
+import com.example.trashure.RoundedCornersTransformation;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,7 +50,13 @@ public class TipsAdapter extends RecyclerView.Adapter<TipsAdapter.ViewHolder>{
         final TipsModel model = mList.get(i);
 
         viewHolder.tvJudul.setText(model.getJudul());
-        Picasso.with(mContext).load(model.getGambar()).into(viewHolder.ivTips);
+
+        final int radius = 20;
+        final int margin = 20;
+        final Transformation transformation = new RoundedCornersTransformation(radius, margin);
+
+        Picasso.with(mContext).load(model.getGambar()).transform(transformation).into(viewHolder.ivTips);
+        //Picasso.with(mContext).load(model.getGambar()).into(viewHolder.ivTips);
 
         viewHolder.rlTips.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -13,6 +13,7 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:background="@android:color/white"
+        android:layout_gravity="center_vertical"
         >
 
         <RelativeLayout
@@ -40,16 +41,17 @@
                 android:layout_below="@id/iv_logo"
                 android:text="Trashure"
                 android:textAlignment="textStart"
-                android:textSize="20sp"
+                android:textSize="24sp"
                 android:textColor="@android:color/black"
-                android:textStyle="bold"/>
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"/>
 
             <EditText
                 android:id="@+id/et_email_login"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_trashure"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="80dp"
                 android:padding="10dp"
                 android:hint="Email"
                 android:textColor="@color/colorInputText"

@@ -5,23 +5,23 @@
     <item
         android:id="@+id/menuBeranda"
         android:enabled="true"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_home_svg"
         android:iconTint="@color/colorAccent"
         android:title="Beranda"></item>
     <item
         android:id="@+id/menuPenukaran"
         android:enabled="true"
-        android:icon="@drawable/ic_bank"
+        android:icon="@drawable/ic_bank_svg"
         android:iconTint="@color/colorAccent"
         android:title="Penukaran"></item>
     <item android:id="@+id/menuScan" android:title="Scan"
-        android:icon="@drawable/ic_search" android:iconTint="@color/colorAccent">
+        android:icon="@drawable/ic_search_svg" android:iconTint="@color/colorAccent">
     </item>
     <item android:id="@+id/menuHarga" android:title="Harga"
-        android:icon="@drawable/ic_price" android:iconTint="@color/colorAccent">
+        android:icon="@drawable/ic_tag_svg" android:iconTint="@color/colorAccent">
     </item>
     <item android:id="@+id/menuAkun" android:title="Akun"
-        android:icon="@drawable/ic_person" android:iconTint="@color/colorAccent">
+        android:icon="@drawable/ic_user_svg" android:iconTint="@color/colorAccent">
     </item>
 
 </menu>

@@ -22,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -67,22 +68,40 @@ public class PenukaranFragment extends Fragment {
 
     public void eventPenukaran() {
         expandableRelativeLayout = (ExpandableRelativeLayout) getActivity().findViewById(R.id.expandableLayout);
-        final LinearLayout llPulsa = (LinearLayout) getActivity().findViewById(R.id.ll_pulsa);
+        final RelativeLayout llPulsa = (RelativeLayout) getActivity().findViewById(R.id.ll_pulsa);
+        final RelativeLayout l2Dana = (RelativeLayout) getActivity().findViewById(R.id.l2_dana);
+        final RelativeLayout l3Link = (RelativeLayout) getActivity().findViewById(R.id.l3_link);
         final ImageView arrow = (ImageView) getActivity().findViewById(R.id.iv_penukaran_pulsa);
-        //expandableRelativeLayout.toggle();
+        //llPulsa.setBackgroundResource(R.drawable.bg_white);
         llPulsa.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if(expandableRelativeLayout.isExpanded())
                 {
                     expandableRelativeLayout.toggle();
-                    arrow.setImageResource(R.drawable.ic_arrow_drop_down);
+                    arrow.setImageResource(R.drawable.ic_arrow_down);
+                    llPulsa.setBackgroundResource(R.drawable.bg_white);
                 }
                 else
                 {
                     expandableRelativeLayout.toggle();
-                    arrow.setImageResource(R.drawable.ic_arrow_drop_up);
+                    arrow.setImageResource(R.drawable.ic_arrow_up);
+                    llPulsa.setBackgroundResource(R.drawable.bg_white_top);
                 }
+            }
+        });
+
+        l2Dana.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Comming Soon!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        l3Link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getActivity(), "Comming Soon!", Toast.LENGTH_SHORT).show();
             }
         });
     }
