@@ -1,7 +1,5 @@
 package com.example.trashure.Feature.Beranda;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -13,22 +11,18 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.trashure.Feature.Notifikasi.LainnyaFragment;
+import com.example.trashure.FCViewPager;
 import com.example.trashure.Feature.Notifikasi.NotifikasiFragment;
-import com.example.trashure.Feature.Notifikasi.TransaksiAdapter;
-import com.example.trashure.Feature.Notifikasi.TransaksiFragment;
-import com.example.trashure.Feature.Notifikasi.TransaksiModel;
 import com.example.trashure.Feature.Setting.SettingFragment;
 import com.example.trashure.R;
+import com.github.mikephil.charting.charts.BarChart;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,16 +30,11 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.nex3z.notificationbadge.NotificationBadge;
-import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-
-import static com.facebook.FacebookSdk.getApplicationContext;
 
 
 public class BerandaFragment extends Fragment{
@@ -66,11 +55,11 @@ public class BerandaFragment extends Fragment{
     private FirebaseAuth mAuth;
     private SetoranDetail FragmentSetoranDetail;
 
-    private void setupViewPager(ViewPager viewPager) {
-        BerandaFragment.tabAdapter adapter = new BerandaFragment.tabAdapter(getChildFragmentManager());
-        adapter.addFragment(new GraphFragment(), "   Minggu   ");
-        adapter.addFragment(new GraphFragment(), "   Bulan   ");
-        adapter.addFragment(new GraphFragment(), "   Tahun   ");
+    private void setupViewPager(final FCViewPager viewPager) {
+        final BerandaFragment.tabAdapter adapter = new BerandaFragment.tabAdapter(getChildFragmentManager());
+        adapter.addFragment(new GraphMingguan(), "   Minggu   ");
+        adapter.addFragment(new GraphBulanan(), "   Bulan   ");
+        adapter.addFragment(new GraphTahunan(), "   Tahun   ");
         viewPager.setAdapter(adapter);
     }
 
@@ -79,7 +68,8 @@ public class BerandaFragment extends Fragment{
                              Bundle savedInstanceState) {
         //return inflater.inflate(R.layout.fragment_beranda, container, false);
         View view = inflater.inflate(R.layout.fragment_beranda,container, false);
-        ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpagerGraph);
+        FCViewPager viewPager = (FCViewPager) view.findViewById(R.id.viewpagerGraph);
+        viewPager.setEnableSwipe(false);
         setupViewPager(viewPager);
         // Set Tabs inside Toolbar
         final TabLayout tabs = (TabLayout) view.findViewById(R.id.tabs_graph);
@@ -314,5 +304,4 @@ public class BerandaFragment extends Fragment{
             return mFragmentTitleList.get(position);
         }
     }
-
 }
