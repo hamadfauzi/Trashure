@@ -53,10 +53,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         contextOfApplication = getApplicationContext();
-        Window window = this.getWindow();
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        getWindow().setStatusBarColor(getResources().getColor(R.color.colorAccent));
 
         setContentView(R.layout.activity_main);
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNavBar);

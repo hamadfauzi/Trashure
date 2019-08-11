@@ -7,8 +7,7 @@
 
     <RelativeLayout
         android:layout_width="160dp"
-        android:layout_height="120dp"
-        android:layout_marginLeft="-6dp">
+        android:layout_height="120dp">
         <ImageView
             android:id="@+id/iv_tips"
             android:layout_width="match_parent"

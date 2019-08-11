@@ -3,12 +3,19 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
+        <item name="android:statusBarColor">@color/colorBackground</item>
+        <item name="android:windowLightStatusBar">true</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/SFTextViewStyle</item>
         <item name="buttonStyle">@style/SFButtonStyle</item>
-        <item name="android:editTextStyle">@style/SFEditTextStyle</item>
+    </style>
+
+    <style name="CustomViewAllTab" parent="@android:style/TextAppearance.Widget.TabWidget">
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/sf_pro_display_regular</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="SFEditTextStyle" parent="android:Widget.EditText">

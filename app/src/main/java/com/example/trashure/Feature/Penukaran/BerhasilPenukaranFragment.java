@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -48,7 +49,14 @@ public class BerhasilPenukaranFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        setStatusBar();
         initialize();
+    }
+
+    private void setStatusBar(){
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getActivity().getWindow().clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.colorBackground));
     }
 
     private void initialize(){

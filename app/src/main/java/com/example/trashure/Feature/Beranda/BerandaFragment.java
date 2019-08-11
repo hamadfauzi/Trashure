@@ -5,20 +5,27 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.trashure.Feature.Notifikasi.LainnyaFragment;
 import com.example.trashure.Feature.Notifikasi.NotifikasiFragment;
 import com.example.trashure.Feature.Notifikasi.TransaksiAdapter;
+import com.example.trashure.Feature.Notifikasi.TransaksiFragment;
 import com.example.trashure.Feature.Notifikasi.TransaksiModel;
 import com.example.trashure.Feature.Setting.SettingFragment;
 import com.example.trashure.R;
@@ -54,15 +61,32 @@ public class BerandaFragment extends Fragment{
     private NotifikasiFragment notifikasiFragment;
     private SettingFragment settingFragment;
     private BottomNavigationView bottomNavigationView;
-    private TextView tv_saldo,tv_level,getStatus,setoranDetail;
+    private TextView tv_status,tv_saldo,tv_level,getStatus,setoranDetail,setoranEmpty;
     private DatabaseReference userRefs,notifRefs,setoranRefs,tipsRefs;
     private FirebaseAuth mAuth;
     private SetoranDetail FragmentSetoranDetail;
 
+    private void setupViewPager(ViewPager viewPager) {
+        BerandaFragment.tabAdapter adapter = new BerandaFragment.tabAdapter(getChildFragmentManager());
+        adapter.addFragment(new GraphFragment(), "   Minggu   ");
+        adapter.addFragment(new GraphFragment(), "   Bulan   ");
+        adapter.addFragment(new GraphFragment(), "   Tahun   ");
+        viewPager.setAdapter(adapter);
+    }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_beranda, container, false);
+        //return inflater.inflate(R.layout.fragment_beranda, container, false);
+        View view = inflater.inflate(R.layout.fragment_beranda,container, false);
+        ViewPager viewPager = (ViewPager) view.findViewById(R.id.viewpagerGraph);
+        setupViewPager(viewPager);
+        // Set Tabs inside Toolbar
+        final TabLayout tabs = (TabLayout) view.findViewById(R.id.tabs_graph);
+        tabs.setTabGravity(TabLayout.GRAVITY_FILL);
+        tabs.setTabMode(TabLayout.MODE_SCROLLABLE);
+        tabs.setupWithViewPager(viewPager);
+        return view;
     }
 
     @Override
@@ -76,9 +100,15 @@ public class BerandaFragment extends Fragment{
         eventFragmentAkun();
     }
 
+    private void setStatusBar(){
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getActivity().getWindow().clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.colorBackground));
+    }
 
 
     private void eventFragmentAkun() {
+        setStatusBar();
         initRecyclerView();
         initialize();
 
@@ -86,6 +116,7 @@ public class BerandaFragment extends Fragment{
 
     public void initialize(){
         FragmentSetoranDetail = new SetoranDetail();
+        setoranEmpty = (TextView) getActivity().findViewById(R.id.setoran_kosong);
         setoranDetail = (TextView) getActivity().findViewById(R.id.expand);
         getStatus = (TextView) getActivity().findViewById(R.id.getStatus);
         setoranRefs = FirebaseDatabase.getInstance().getReference().child("Setoran").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
@@ -98,6 +129,7 @@ public class BerandaFragment extends Fragment{
         btnNotif = (ImageButton) getActivity().findViewById(R.id.notifikasi);
         tv_saldo = (TextView) getActivity().findViewById(R.id.tv_saldo_beranda);
         tv_level = (TextView) getActivity().findViewById(R.id.tv_level_beranda);
+        tv_status = (TextView) getActivity().findViewById(R.id.tv_status_trashbag);
         settingFragment = new SettingFragment();
         notifikasiFragment = new NotifikasiFragment();
         bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.bottomNavBar);
@@ -122,6 +154,12 @@ public class BerandaFragment extends Fragment{
                     if(dataSnapshot.hasChild("trashbag"))
                     {
                         getStatus.setText(dataSnapshot.child("trashbag").getValue().toString());
+                    }
+
+                    if (getStatus.getText().toString().equalsIgnoreCase("Kosong")){
+                        tv_status.setText(" Tidak Ada");
+                    }else{
+                        tv_status.setText(" "+getStatus.getText().toString());
                     }
 
                 }
@@ -154,10 +192,17 @@ public class BerandaFragment extends Fragment{
         setoranRefs.limitToLast(4).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                mLists.clear();
-                for (DataSnapshot dsp:dataSnapshot.getChildren()){
-                    mLists.add(new SetoranModel(dsp.child("id_trashbag").getValue().toString(),dsp.child("date").getValue().toString(),dsp.child("status").getValue().toString()));
-                    mAdapter.notifyDataSetChanged();
+                if (dataSnapshot.getChildrenCount()!=0){
+                    mRecyclerView.setVisibility(View.VISIBLE);
+                    setoranEmpty.setVisibility(View.GONE);
+                    mLists.clear();
+                    for (DataSnapshot dsp:dataSnapshot.getChildren()){
+                        mLists.add(new SetoranModel(dsp.child("id_trashbag").getValue().toString(),dsp.child("date").getValue().toString(),dsp.child("status").getValue().toString()));
+                        mAdapter.notifyDataSetChanged();
+                    }
+                }else{
+                    mRecyclerView.setVisibility(View.GONE);
+                    setoranEmpty.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -241,22 +286,32 @@ public class BerandaFragment extends Fragment{
         fragmentTransaction.commit();
     }
 
-    public static class TipsViewHolder extends RecyclerView.ViewHolder
-    {
-        View mView;
-        public TipsViewHolder(View itemView) {
-            super(itemView);
-            mView = itemView;
+    static class tabAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public tabAdapter(FragmentManager manager) {
+            super(manager);
         }
 
-        public void setJudulTips(String judulP) {
-            TextView judul = (TextView) mView.findViewById(R.id.tv_judul_tips);
-            judul.setText(judulP);
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
         }
 
-        public void setPostImage(Context ctx, String image1) {
-            ImageView image = (ImageView) mView.findViewById(R.id.iv_tips);
-            Picasso.with(ctx).load(image1).into(image);
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFragment(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
         }
     }
 

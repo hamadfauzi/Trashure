@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -48,7 +49,16 @@ public class TipsAdapter extends RecyclerView.Adapter<TipsAdapter.ViewHolder>{
     public void onBindViewHolder(@NonNull ViewHolder viewHolder, int i) {
         final int position = i;
         final TipsModel model = mList.get(i);
+        RelativeLayout.LayoutParams lf = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        RelativeLayout.LayoutParams ll = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+        lf.setMargins(20, 0, 0, 0);
+        ll.setMargins(0, 0, 20, 0);
 
+        if (i==(getItemCount()-1)){
+            viewHolder.rlTips.setLayoutParams(lf);
+        } else if(i==0){
+            viewHolder.rlTips.setLayoutParams(ll);
+        }
         viewHolder.tvJudul.setText(model.getJudul());
 
         final int radius = 20;

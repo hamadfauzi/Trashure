@@ -15,12 +15,19 @@
         android:roundIcon="@drawable/logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Feature.Beranda.TipsDetail"></activity>
+        <activity
+            android:name=".Feature.Beranda.TipsDetail"
+            android:parentActivityName=".MainActivity">
+        </activity>
         <activity
             android:name=".Feature.Register.RegisterActivity"
-            android:parentActivityName=".Feature.Login.LoginActivity" />
+            android:parentActivityName=".Feature.Login.LoginActivity">
+        </activity>
         <activity android:name=".MainActivity" />
-        <activity android:name=".Feature.ResetPassword.ResetPasswordActivity" />
+        <activity
+            android:name=".Feature.ResetPassword.ResetPasswordActivity"
+            android:parentActivityName=".Feature.Login.LoginActivity">
+        </activity>
         <activity android:name=".Feature.Login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -30,7 +37,7 @@
         </activity>
         <activity
             android:name=".Feature.Akun.EditAkunActivity"
-            android:parentActivityName=".Feature.Login.LoginActivity"></activity>
+            android:parentActivityName=".MainActivity"></activity>
 
         <meta-data
             android:name="com.google.android.gms.vision.DEPENDENCIES"

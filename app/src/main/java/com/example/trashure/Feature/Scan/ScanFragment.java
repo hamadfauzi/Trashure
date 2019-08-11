@@ -1,7 +1,11 @@
 package com.example.trashure.Feature.Scan;
 
 import android.Manifest;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Typeface;
 import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
@@ -11,19 +15,24 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AlertDialog;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.SparseArray;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.trashure.MainActivity;
 import com.example.trashure.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -49,19 +58,21 @@ import java.util.HashMap;
 
 public class ScanFragment extends Fragment{
 
+    private ScanFragment scanFragment;
     private BerhasilScanFragment berhasilScanFragment;
     private SurfaceView sv_scanner;
     private CameraSource cameraSource;
     private BarcodeDetector barcodeDetector;
     private String scanResult="",tBagConnect="";
-    private DatabaseReference databaseReference,setoranRefs;
+    private DatabaseReference databaseReference,setoranRefs,trashbagRefs;
     private String[] id_trashbag;
     private BottomNavigationView bottomNavigationView;
     private EditText et_id;
     private Button btn_scan;
     private DatabaseReference userRefs;
     private boolean cek;
-    private TextView setoranCount;
+    private TextView setoranCount,isEmpty;
+    private AlertDialog.Builder alertDialog;
 
 
     @Override
@@ -78,8 +89,15 @@ public class ScanFragment extends Fragment{
     @Override
     public void onStart() {
         super.onStart();
+        setStatusBar();
         fetching();
         initialize();
+    }
+
+    private void setStatusBar(){
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getActivity().getWindow().clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.white));
     }
 
     private void fetching(){
@@ -124,10 +142,13 @@ public class ScanFragment extends Fragment{
 
         setoranCount = (TextView) getActivity().findViewById(R.id.setoranCount);
         setoranRefs = FirebaseDatabase.getInstance().getReference().child("Setoran").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+        isEmpty = (TextView) getActivity().findViewById(R.id.isEmpty);
+        trashbagRefs = FirebaseDatabase.getInstance().getReference().child("Trashbag");
     }
 
     private void initialize(){
-
+        alertDialog = new AlertDialog.Builder(getActivity());
+        scanFragment = new ScanFragment();
         bottomNavigationView = (BottomNavigationView) getActivity().findViewById(R.id.bottomNavBar);
         bottomNavigationView.setVisibility(View.VISIBLE);
         btn_scan = (Button) getActivity().findViewById(R.id.btn_scan);
@@ -186,27 +207,73 @@ public class ScanFragment extends Fragment{
                         }
                     }
                     if (!cek){
-                        Log.d("QRCODE SALAH!","QRCODE TIDAK TERDETEKSI");
-                        sentToScan();
-                    }else{
-                        berhasilScanFragment.setId(scanResult);
-                        FirebaseAuth.getInstance().updateCurrentUser(FirebaseAuth.getInstance().getCurrentUser()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        getActivity().runOnUiThread(new Runnable() {
                             @Override
-                            public void onComplete(@NonNull Task<Void> task) {
-                                if (task.isSuccessful()){
-                                    HashMap userMap = new HashMap();
-                                    userMap.put("trashbag",scanResult);
-                                    userRefs.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
-                                        @Override
-                                        public void onComplete(@NonNull Task task) {
-                                            Log.d("TAG","SCAN SUCCES");
-                                        }
-                                    });
-                                }
+                            public void run() {
+                                alertDialog.setTitle("Wahh ..");
+                                alertDialog.setMessage("QR Code yang kamu scan salah, QR Code-nya ada di trashbag lohh...");
+                                alertDialog.setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                        fragmentTransaction.replace(R.id.frameFragment,scanFragment);
+                                        fragmentTransaction.commit();
+                                    }
+                                });
+                                alertDialog.show();
                             }
                         });
-                        sentToSuccess();
-                        scanActivity();
+                    }else{
+                        trashbagRefs.child(scanResult).addValueEventListener(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                isEmpty.setText(dataSnapshot.child("user_id").getValue().toString());
+                                if (isEmpty.getText().toString().equalsIgnoreCase("Kosong")){
+                                    berhasilScanFragment.setId(scanResult);
+                                    FirebaseAuth.getInstance().updateCurrentUser(FirebaseAuth.getInstance().getCurrentUser()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                        @Override
+                                        public void onComplete(@NonNull Task<Void> task) {
+                                            if (task.isSuccessful()){
+                                                HashMap userMap = new HashMap();
+                                                userMap.put("trashbag",scanResult);
+                                                userRefs.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
+                                                    @Override
+                                                    public void onComplete(@NonNull Task task) {
+                                                        Log.d("TAG","SCAN SUCCES");
+                                                    }
+                                                });
+                                            }
+                                        }
+                                    });
+                                    if (getActivity()!=null){
+                                        scanActivity(scanResult);
+                                        sentToSuccess();
+                                    }
+                                }else{
+                                    if (getActivity()!=null){
+                                        getActivity().runOnUiThread(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                alertDialog.setTitle("Yahh ..");
+                                                alertDialog.setMessage("Trashbag ini sudah terhubung dengan user lain. Cari yang lain yuk!!");
+                                                alertDialog.setPositiveButton("Oke", new DialogInterface.OnClickListener() {
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
+                                                        fragmentTransaction.replace(R.id.frameFragment,scanFragment);
+                                                        fragmentTransaction.commit();
+                                                    }
+                                                });
+                                                alertDialog.show();
+                                            }
+                                        });
+                                    }
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
                     }
                 }
             }
@@ -215,7 +282,6 @@ public class ScanFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 checker();
-                scanActivity();
             }
         });
     }
@@ -231,23 +297,42 @@ public class ScanFragment extends Fragment{
                 }else cek = false;
             }
             if (cek){
-                berhasilScanFragment.setId(et_id.getText().toString().toUpperCase());
-                HashMap userMap = new HashMap();
-                userMap.put("trashbag",et_id.getText().toString().toUpperCase());
-                userRefs.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
+                trashbagRefs.child(et_id.getText().toString().toUpperCase()).addValueEventListener(new ValueEventListener() {
                     @Override
-                    public void onComplete(@NonNull Task task) {
-                        Log.d("TAG","SCAN SUCCESS");
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.child("user_id").getValue().toString().equalsIgnoreCase("Kosong")){
+                            berhasilScanFragment.setId(et_id.getText().toString().toUpperCase());
+                            HashMap userMap = new HashMap();
+                            userMap.put("trashbag",et_id.getText().toString().toUpperCase());
+                            userRefs.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
+                                @Override
+                                public void onComplete(@NonNull Task task) {
+                                    Log.d("TAG","SCAN SUCCESS");
+                                }
+                            });
+                            if (getActivity()!=null){
+                                sentToSuccess();
+                                scanActivity(et_id.getText().toString().toUpperCase());
+                            }
+                        }else{
+                            if (getActivity()!= null){
+                                Toast.makeText(getActivity(), "Trashbag ini sudah terhubung dengan user lain. Silahkan cari trashbag lain!", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
                     }
                 });
-                sentToSuccess();
             }else{
                 Toast.makeText(getActivity(), "ID Trashbag Salah!", Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void scanActivity(){
+    private void scanActivity(final String trash_id){
         //Fetching Trashbag whose connected with user
         setoranRefs.addValueEventListener(new ValueEventListener() {
             @Override
@@ -276,11 +361,23 @@ public class ScanFragment extends Fragment{
 
                 HashMap setoranMap = new HashMap();
                 setoranMap.put("id",setoranCount.getText().toString());
-                setoranMap.put("id_trashbag",et_id.getText().toString().toUpperCase());
+                setoranMap.put("id_trashbag",trash_id);
                 setoranMap.put("id_user", FirebaseAuth.getInstance().getCurrentUser().getUid());
                 setoranMap.put("date",date);
                 setoranMap.put("status","Proses");
                 setoranRefs.child(setoranCount.getText().toString()).updateChildren(setoranMap);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        trashbagRefs.child(trash_id).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                trashbagRefs.child(trash_id).child("user_id").setValue(FirebaseAuth.getInstance().getCurrentUser().getUid());
             }
 
             @Override
@@ -297,7 +394,7 @@ public class ScanFragment extends Fragment{
     }
     private void sentToScan(){
         FragmentTransaction fragmentTransaction = getActivity().getSupportFragmentManager().beginTransaction();
-        fragmentTransaction.replace(R.id.frameFragment,this);
+        fragmentTransaction.replace(R.id.frameFragment,scanFragment);
         fragmentTransaction.commit();
     }
 

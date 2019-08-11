@@ -18,6 +18,8 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -199,6 +201,12 @@ public class RegisterActivity extends AppCompatActivity {
     @SuppressLint("ClickableViewAccessibility")
     public void initialize()
     {
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+
         etEmail = (EditText) findViewById(R.id.et_email_register);
         etNama = (EditText) findViewById(R.id.et_nama_register);
         etNoTelephone = (EditText) findViewById(R.id.et_nomorhp_register);

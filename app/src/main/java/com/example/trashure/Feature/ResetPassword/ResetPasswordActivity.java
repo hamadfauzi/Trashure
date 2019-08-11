@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -22,17 +25,42 @@ public class ResetPasswordActivity extends AppCompatActivity {
     FirebaseAuth mAuth;
     EditText etEmail;
     Button btnKirimEmail;
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reset_password);
         initialize();
+    }
 
+    private void setToolbar(){
+        toolbar = (Toolbar) findViewById(R.id.toolbar_reset_password);
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("");
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ResetPasswordActivity.this,LoginActivity.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
+
+    private void setStatusBar(){
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        window.setStatusBarColor(getResources().getColor(R.color.white));
     }
 
     public void initialize()
     {
+        setStatusBar();
+        setToolbar();
         etEmail = (EditText) findViewById(R.id.et_send_email);
         btnKirimEmail = (Button) findViewById(R.id.btn_kirim_email);
         mAuth = FirebaseAuth.getInstance();

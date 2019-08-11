@@ -5,21 +5,21 @@
     android:layout_height="match_parent"
     android:layout_width="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@android:color/white"
+    android:background="@color/colorBackground"
     xmlns:android="http://schemas.android.com/apk/res/android"
     tools:context=".Feature.Login.LoginActivity">
 
     <RelativeLayout
         android:layout_height="match_parent"
         android:layout_width="match_parent"
-        android:background="@android:color/white"
+        android:background="@color/colorBackground"
         android:layout_gravity="center_vertical"
         >
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_marginStart="24dp"
-            android:background="@android:color/white"
+            android:background="@color/colorBackground"
             android:layout_marginEnd="24dp"
             android:layout_height="match_parent"
             >

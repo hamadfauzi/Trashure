@@ -13,6 +13,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
@@ -78,6 +79,7 @@ public class KonfirmasiFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        setStatusBar();
         initialize();
     }
 
@@ -86,6 +88,12 @@ public class KonfirmasiFragment extends Fragment {
         toolbar.setTitle("");
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity) getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+    }
+
+    private void setStatusBar(){
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getActivity().getWindow().clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.white));
     }
 
     private void initialize(){

@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -81,7 +82,14 @@ public class EditAkunActivity extends AppCompatActivity {
         initialize();
     }
 
+    private void setStatusBar(){
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.white));
+    }
+
     public void initialize(){
+        setStatusBar();
         akunFragment = new AkunFragment();
         mAuth = FirebaseAuth.getInstance();
         currentUID = mAuth.getCurrentUser().getUid();

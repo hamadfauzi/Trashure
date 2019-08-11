@@ -12,6 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.trashure.R;
 import com.google.firebase.auth.FirebaseAuth;
@@ -54,8 +56,16 @@ public class SetoranDetail extends Fragment {
     }
 
     private void eventFragmentAkun() {
+        setStatusBar();
         initRecyclerView();
         initialize();
+    }
+
+    private void setStatusBar(){
+        Window window = getActivity().getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        window.setStatusBarColor(getActivity().getResources().getColor(R.color.white));
     }
 
     private void initialize(){

@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Scan"
-            android:textSize="26sp"
+            android:textSize="24sp"
             android:textColor="@color/colorText"
             android:textStyle="bold"/>
     </android.support.v7.widget.Toolbar>
@@ -38,6 +38,11 @@
             android:layout_weight="7">
             <TextView
                 android:id="@+id/setoranCount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+            <TextView
+                android:id="@+id/isEmpty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:visibility="gone"/>
@@ -127,7 +132,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="16dp"
                 android:text="@string/kode_qr"
-                android:textSize="13sp"
+                android:textSize="14sp"
                 android:textColor="@color/colorTextGrey"
                 android:lineSpacingExtra="0sp"
                 />
@@ -149,8 +154,13 @@
                     android:textColor="@color/colorTextGrey"
                     android:inputType="text"
                     android:layout_centerVertical="true"
-                    android:padding="11dp"
-                    android:maxLength="10"/>
+                    android:padding="10dp"
+                    android:ellipsize="start"
+                    android:gravity="start|center_vertical"
+                    android:maxLength="10"
+                    android:singleLine="true"
+                    android:fontFamily="@font/sf_pro_display_regular"
+                    android:textSize="14sp"/>
                 <Button
                     android:id="@+id/btn_scan"
                     android:layout_width="120dp"

@@ -26,4 +26,7 @@
     </string-array>
     <string name="berhasil_ditukar">berhasil ditukarkan. Sisa saldo anda sebesar Rp.</string>
     <string name="title_transaksi">Penukaran Pulsa</string>
+    <string name="hint_scan">
+        <font family="@font/sf_pro_display_regular">Masukkan ID</font>
+    </string>
 </resources>

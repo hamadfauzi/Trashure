@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
 import com.example.trashure.R;
@@ -44,7 +45,14 @@ public class NominalFragment extends Fragment {
         eventFragmentAkun();
     }
 
+    private void setStatusBar(){
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getActivity().getWindow().clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.white));
+    }
+
     private void eventFragmentAkun() {
+        setStatusBar();
         initialize();
     }
 

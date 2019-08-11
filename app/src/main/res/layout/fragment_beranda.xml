@@ -22,18 +22,18 @@
                     android:text="@string/app_name"
                     android:textSize="26sp"
                     android:textColor="@color/colorText"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/sf_pro_display_bold"
                     />
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content">
                     <ImageButton
                         android:id="@+id/notifikasi"
-                        android:layout_width="20dp"
+                        android:layout_width="16dp"
                         android:layout_height="20dp"
                         android:background="@drawable/bell_vector"
                         android:layout_toLeftOf="@+id/setting"
-                        android:layout_marginRight="24dp"
+                        android:layout_marginRight="22dp"
                         android:layout_centerVertical="true"/>
                     <com.nex3z.notificationbadge.NotificationBadge
                         android:id="@+id/notif_badge"
@@ -110,7 +110,7 @@
             android:layout_marginLeft="16dp"
             android:layout_marginRight="16dp"
             android:layout_below="@+id/layout_beranda_1"
-            android:weightSum="12">
+            android:weightSum="10">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
@@ -141,19 +141,20 @@
                 android:layout_width="2dp"
                 android:layout_height="60dp"
                 android:background="@drawable/separator"
-                android:layout_gravity="center_vertical"/>
+                android:layout_gravity="center_horizontal|center_vertical"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:layout_gravity="center_vertical"
-                android:gravity="center_horizontal"
-                android:layout_weight="7">
+                android:gravity="right"
+                android:layout_marginRight="16dp"
+                android:layout_weight="5">
                 <TextView
                     android:id="@+id/ket_trashbag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Trashbag :"
+                    android:text="Trashbag : "
                     android:textColor="@android:color/white"
                     android:textStyle="bold"
                     />
@@ -162,8 +163,7 @@
                     android:id="@+id/tv_status_trashbag"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text=" Tidak Terhubung"
-                    android:textAlignment="center"
+                    android:text=" TB-AN-0022"
                     android:textColor="@android:color/white"
                     />
 
@@ -191,16 +191,44 @@
                 android:textStyle="bold"
                 android:layout_marginTop="12dp"
                 android:layout_marginLeft="8dp"
+                android:fontFamily="@font/sf_pro_display_bold"
                 />
-
-            <ImageView
+            <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:layout_below="@+id/sub_title"
-                android:layout_marginLeft="8dp"
-                android:layout_marginRight="8dp"
-                android:layout_marginTop="23dp"
-                android:background="@drawable/dummy_chart" />
+                android:layout_height="wrap_content"
+                android:layout_below="@id/sub_title"
+                android:background="@drawable/bg_white">
+                <android.support.design.widget.AppBarLayout
+                    android:id="@+id/appbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    android:background="@drawable/bg_white_separator"
+                    android:layout_marginLeft="8dp"
+                    android:layout_marginRight="8dp"
+                    app:elevation="0dp">
+
+                    <android.support.design.widget.TabLayout
+                        android:id="@+id/tabs_graph"
+                        app:tabTextColor="#718093"
+                        android:layout_width="match_parent"
+                        android:layout_height="?actionBarSize"
+                        app:tabTextAppearance="@style/CustomViewAllTab"
+                        app:tabIndicator="@drawable/bg_tab_green"
+                        app:tabIndicatorFullWidth="false"
+                        app:tabPaddingStart="0dp"
+                        app:tabPaddingEnd="0dp"/>
+                </android.support.design.widget.AppBarLayout>
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpagerGraph"
+                    android:layout_width="match_parent"
+                    android:layout_height="250dp"
+                    android:background="@drawable/bg_white"
+                    android:layout_below="@id/appbar"
+                    android:layout_marginTop="8dp"
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"/>
+            </RelativeLayout>
 
         </RelativeLayout>
 
@@ -225,7 +253,7 @@
                     android:text="@string/setoran"
                     android:textSize="20sp"
                     android:textColor="@color/colorText"
-                    android:textStyle="bold"
+                    android:fontFamily="@font/sf_pro_display_bold"
                     />
                 <TextView
                     android:id="@+id/expand"
@@ -249,6 +277,18 @@
                 tools:itemCount="4"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior">
             </android.support.v7.widget.RecyclerView>
+            <TextView
+                android:id="@+id/setoran_kosong"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upps!!! Setoran sampah kamu masih kosong"
+                android:layout_below="@+id/setoran_layout"
+                android:layout_marginTop="64dp"
+                android:layout_marginBottom="20dp"
+                android:layout_centerInParent="true"
+                android:textColor="@color/colorMenuDefault"
+                android:textSize="16dp"
+                android:visibility="invisible"/>
         </RelativeLayout>
 
         <RelativeLayout
@@ -256,8 +296,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorBackground"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="16dp"
             android:layout_below="@id/layout_beranda_4">
@@ -268,7 +306,9 @@
                 android:text="@string/tips"
                 android:textSize="20sp"
                 android:textColor="@color/colorText"
+                android:fontFamily="@font/sf_pro_display_bold"
                 android:textStyle="bold"
+                android:layout_marginStart="16dp"
                 />
 
             <android.support.v7.widget.RecyclerView

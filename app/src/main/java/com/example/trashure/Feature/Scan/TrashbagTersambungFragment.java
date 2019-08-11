@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -30,11 +31,11 @@ import java.util.HashMap;
 
 public class TrashbagTersambungFragment extends Fragment {
 
-    private DatabaseReference databaseReference,setoranRefs;
+    private DatabaseReference databaseReference,setoranRefs,trashbagRefs;
     private TextView tv_tbag;
     private Button btn_putus;
     private ScanFragment scanFragment;
-    private TextView setoranCount;
+    private TextView getID;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -50,11 +51,18 @@ public class TrashbagTersambungFragment extends Fragment {
     @Override
     public void onStart() {
         super.onStart();
+        setStatusBar();
         initialize();
     }
 
+    private void setStatusBar(){
+        getActivity().getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getActivity().getWindow().clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getActivity().getWindow().setStatusBarColor(getActivity().getResources().getColor(R.color.white));
+    }
+
     private void initialize(){
-        setoranCount = (TextView) getActivity().findViewById(R.id.getSetorCount);
+        getID = (TextView) getActivity().findViewById(R.id.getID);
         scanFragment = new ScanFragment();
         tv_tbag = (TextView) getActivity().findViewById(R.id.tv_trashbag_id_tersambung);
         btn_putus = (Button) getActivity().findViewById(R.id.btn_putus);
@@ -64,6 +72,7 @@ public class TrashbagTersambungFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 String tBag = "Trashbag dengan ID "+dataSnapshot.child("trashbag").getValue().toString();
                 tv_tbag.setText(tBag);
+                getID.setText(dataSnapshot.child("trashbag").getValue().toString());
             }
 
             @Override
@@ -90,6 +99,18 @@ public class TrashbagTersambungFragment extends Fragment {
                             @Override
                             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                                 setoranRefs.child(String.valueOf(dataSnapshot.getChildrenCount()-1)).child("status").setValue("Selesai");
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                            }
+                        });
+                        trashbagRefs = FirebaseDatabase.getInstance().getReference().child("Trashbag").child(getID.getText().toString());
+                        trashbagRefs.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                trashbagRefs.child("user_id").setValue("Kosong");
                             }
 
                             @Override

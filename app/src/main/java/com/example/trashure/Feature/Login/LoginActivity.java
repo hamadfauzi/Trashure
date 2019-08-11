@@ -3,6 +3,7 @@ package com.example.trashure.Feature.Login;
 import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Color;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
@@ -18,6 +19,8 @@ import android.text.method.PasswordTransformationMethod;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -120,9 +123,15 @@ public class LoginActivity extends AppCompatActivity{
         });
     }
 
+    private void setStatusBar(){
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        getWindow().clearFlags(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
+        getWindow().setStatusBarColor(getResources().getColor(R.color.colorBackground));
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private void initialize() {
-
+        setStatusBar();
         mAuth = FirebaseAuth.getInstance();
         mDialog = new ProgressDialog(this);
         btnFacebook = (LoginButton) findViewById(R.id.login_button);

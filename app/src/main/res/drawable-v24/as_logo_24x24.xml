@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:drawable="@drawable/as_logo"
-        android:width="96dp"
+        android:width="48dp"
         android:height="24dp"
     />
 </layer-list>
