@@ -365,6 +365,7 @@ public class ScanFragment extends Fragment{
                 setoranMap.put("id_user", FirebaseAuth.getInstance().getCurrentUser().getUid());
                 setoranMap.put("date",date);
                 setoranMap.put("status","Proses");
+                setoranMap.put("berat",0);
                 setoranRefs.child(setoranCount.getText().toString()).updateChildren(setoranMap);
             }
 

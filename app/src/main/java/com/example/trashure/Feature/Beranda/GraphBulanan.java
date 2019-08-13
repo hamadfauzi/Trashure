@@ -1,6 +1,5 @@
 package com.example.trashure.Feature.Beranda;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.trashure.Feature.RoundedBarChartRenderer;
+import com.example.trashure.RoundedBarChartRenderer;
 import com.example.trashure.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -19,10 +18,8 @@ import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class GraphBulanan extends Fragment {
 
@@ -70,7 +67,7 @@ public class GraphBulanan extends Fragment {
         barDataSet.setHighLightAlpha(0);
         barDataSet.setColors(getActivity().getResources().getColor(R.color.colorBtn));
         barDataSet.setValueTextColor(getActivity().getResources().getColor(R.color.colorLightBlue));
-        barDataSet.setValueTextSize(14f);
+        barDataSet.setValueTextSize(10f);
 
         barChart.getAxisLeft().setLabelCount(5, false);
         barChart.getAxisLeft().setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
@@ -116,7 +113,7 @@ public class GraphBulanan extends Fragment {
         barChart.getXAxis().setGranularity(1f);
         barChart.getXAxis().setTextColor(getActivity().getResources().getColor(R.color.colorLightBlue));
         barChart.getXAxis().setTextSize(12f);
-        barChart.getBarData().setBarWidth(0.3f);
+        barChart.getBarData().setBarWidth(0.15f);
         barChart.invalidate();
         barChart.refreshDrawableState();
     }

@@ -1,6 +1,5 @@
 package com.example.trashure.Feature.Beranda;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -9,7 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.trashure.Feature.RoundedBarChartRenderer;
+import com.example.trashure.RoundedBarChartRenderer;
 import com.example.trashure.R;
 import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.components.AxisBase;
@@ -18,10 +17,7 @@ import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.formatter.IAxisValueFormatter;
-import com.github.mikephil.charting.highlight.Highlight;
-import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 
 import java.util.ArrayList;
 
@@ -72,7 +68,7 @@ public class GraphMingguan extends Fragment {
         barDataSet.setHighLightAlpha(0);
         barDataSet.setColors(getActivity().getResources().getColor(R.color.colorBtn));
         barDataSet.setValueTextColor(getActivity().getResources().getColor(R.color.colorLightBlue));
-        barDataSet.setValueTextSize(14f);
+        barDataSet.setValueTextSize(10f);
 
         barChart.getAxisLeft().setLabelCount(5, false);
         barChart.getAxisLeft().setPosition(YAxis.YAxisLabelPosition.OUTSIDE_CHART);
@@ -104,7 +100,7 @@ public class GraphMingguan extends Fragment {
         barChart.getXAxis().setTextColor(getActivity().getResources().getColor(R.color.colorLightBlue));
         barChart.getXAxis().setLabelCount(4);
         barChart.getXAxis().setTextSize(12f);
-        barChart.getBarData().setBarWidth(0.25f);
+        barChart.getBarData().setBarWidth(0.125f);
         barChart.invalidate();
         barChart.refreshDrawableState();
     }

@@ -1,5 +1,7 @@
 package com.example.trashure.Feature.Scan;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -36,6 +38,7 @@ public class TrashbagTersambungFragment extends Fragment {
     private Button btn_putus;
     private ScanFragment scanFragment;
     private TextView getID;
+    private AlertDialog.Builder alertDialog;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +65,7 @@ public class TrashbagTersambungFragment extends Fragment {
     }
 
     private void initialize(){
+        alertDialog = new AlertDialog.Builder(getActivity());
         getID = (TextView) getActivity().findViewById(R.id.getID);
         scanFragment = new ScanFragment();
         tv_tbag = (TextView) getActivity().findViewById(R.id.tv_trashbag_id_tersambung);
@@ -83,45 +87,59 @@ public class TrashbagTersambungFragment extends Fragment {
         btn_putus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseAuth.getInstance().updateCurrentUser(FirebaseAuth.getInstance().getCurrentUser()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                alertDialog.setTitle("Konfirmasi");
+                alertDialog.setMessage("Anda akan kehilangan seluruh sampah anda pada Trashbag "+getID.getText().toString()+", bersedia?");
+                alertDialog.setPositiveButton("Iya", new DialogInterface.OnClickListener() {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        HashMap userMap = new HashMap();
-                        userMap.put("trashbag","Kosong");
-                        databaseReference.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        FirebaseAuth.getInstance().updateCurrentUser(FirebaseAuth.getInstance().getCurrentUser()).addOnCompleteListener(new OnCompleteListener<Void>() {
                             @Override
-                            public void onComplete(@NonNull Task task) {
-                                Log.d("PUTUS TRASHBAG","PUTUS BERHASIL");
+                            public void onComplete(@NonNull Task<Void> task) {
+                                HashMap userMap = new HashMap();
+                                userMap.put("trashbag","Kosong");
+                                databaseReference.updateChildren(userMap).addOnCompleteListener(new OnCompleteListener() {
+                                    @Override
+                                    public void onComplete(@NonNull Task task) {
+                                        Log.d("PUTUS TRASHBAG","PUTUS BERHASIL");
+                                    }
+                                });
+                                setoranRefs = FirebaseDatabase.getInstance().getReference().child("Setoran").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
+                                setoranRefs.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        setoranRefs.child(String.valueOf(dataSnapshot.getChildrenCount()-1)).child("status").setValue("Selesai");
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
+                                trashbagRefs = FirebaseDatabase.getInstance().getReference().child("Trashbag").child(getID.getText().toString());
+                                trashbagRefs.addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                        trashbagRefs.child("user_id").setValue("Kosong");
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                                    }
+                                });
                             }
                         });
-                        setoranRefs = FirebaseDatabase.getInstance().getReference().child("Setoran").child(FirebaseAuth.getInstance().getCurrentUser().getUid());
-                        setoranRefs.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                setoranRefs.child(String.valueOf(dataSnapshot.getChildrenCount()-1)).child("status").setValue("Selesai");
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
-                        trashbagRefs = FirebaseDatabase.getInstance().getReference().child("Trashbag").child(getID.getText().toString());
-                        trashbagRefs.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                                trashbagRefs.child("user_id").setValue("Kosong");
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError databaseError) {
-
-                            }
-                        });
+                        scanFragment.settBagConnect("Kosong");
+                        sentToScan();
                     }
                 });
-                scanFragment.settBagConnect("Kosong");
-                sentToScan();
+                alertDialog.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                alertDialog.show();
             }
         });
     }

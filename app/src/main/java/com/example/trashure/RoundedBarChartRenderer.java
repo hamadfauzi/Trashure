@@ -1,4 +1,4 @@
-package com.example.trashure.Feature;
+package com.example.trashure;
 
 import android.graphics.Canvas;
 import android.graphics.RectF;
