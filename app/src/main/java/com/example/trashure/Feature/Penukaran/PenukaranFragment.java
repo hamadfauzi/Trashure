@@ -6,6 +6,7 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -29,6 +30,12 @@ import android.widget.Toast;
 
 import com.example.trashure.R;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.regex.Pattern;
 
@@ -41,11 +48,13 @@ public class PenukaranFragment extends Fragment {
     private NominalFragment nominalFragment;
     private BottomNavigationView bottomNavigationView;
     private TextView tv_harga,tv_noHp,tv_alert;
-    private String nominal="Rp.5000",harga="Rp.6000",phoneNumber="",jenisLayanan="",provider="";
+    private String nominal="Rp.5000",harga="Rp.6000",phoneNumber="",jenisLayanan="",provider="",mySaldo="";
     private ExpandableRelativeLayout expandableRelativeLayout;
     private InputFilter filter;
     private ColorFilter colorFilter;
     private boolean approved = true;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,6 +67,23 @@ public class PenukaranFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+        mAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("User").child(mAuth.getCurrentUser().getUid());
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if(dataSnapshot.exists()){
+                    String saldo = dataSnapshot.child("saldo").getValue().toString();
+                    setMySaldo(saldo);
+                    Log.d("CHECKSALDO",saldo);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
     }
 
     @Override
@@ -180,20 +206,28 @@ public class PenukaranFragment extends Fragment {
             }
         });
 
+        harga = pemisah(harga);
+
         btnTukar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Log.d("PROVIDERCHECKER",String.valueOf(provider));
-                Log.d("BOOLEANCHECKER",String.valueOf(approved));
-                jenisLayanan = "Pulsa";
-                if(TextUtils.isEmpty(et_phoneNumber.getText().toString()) || approved==false){
-                    Toast.makeText(getActivity(), "Data harus diisi", Toast.LENGTH_SHORT).show();
-                    et_phoneNumber.getBackground().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_IN);
-                    tv_noHp.setTextColor(getResources().getColor(R.color.red));
-                    et_phoneNumber.setTextColor(getResources().getColor(R.color.red));
-                    tv_alert.setVisibility(View.VISIBLE);
-                }else{
-                    konfTukar();
+                    /*tukarActivity();
+                    toSuccess();*/
+                    Log.d("PROVIDERCHECKER",String.valueOf(provider));
+                    Log.d("BOOLEANCHECKER",String.valueOf(approved));
+                    jenisLayanan = "Pulsa";
+                    if(TextUtils.isEmpty(et_phoneNumber.getText().toString()) || approved==false){
+                        Toast.makeText(getActivity(), "Data harus diisi", Toast.LENGTH_SHORT).show();
+                        et_phoneNumber.getBackground().setColorFilter(getResources().getColor(R.color.red), PorterDuff.Mode.SRC_IN);
+                        tv_noHp.setTextColor(getResources().getColor(R.color.red));
+                        et_phoneNumber.setTextColor(getResources().getColor(R.color.red));
+                        tv_alert.setVisibility(View.VISIBLE);
+                    }else{
+                        if(Integer.valueOf(mySaldo)<Integer.valueOf(harga)){
+                            Toast.makeText(getActivity(), "Saldo anda tidak cukup!", Toast.LENGTH_SHORT).show();
+                        }else{
+                            konfTukar();
+                    }
                 }
             }
         });
@@ -356,6 +390,17 @@ public class PenukaranFragment extends Fragment {
         fragmentTransaction.commit();
     }
 
+    private String pemisah(String s){
+        String[] separated = s.split("\\.");
+        String nilai;
+        if(separated.length>2){
+            nilai = separated[1]+separated[2];
+        }else{
+            nilai = separated[1];
+        }
+        return nilai;
+    }
+
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
     }
@@ -368,4 +413,7 @@ public class PenukaranFragment extends Fragment {
         this.nominal = et_nominal;
     }
 
+    public void setMySaldo(String mySaldo) {
+        this.mySaldo = mySaldo;
+    }
 }
