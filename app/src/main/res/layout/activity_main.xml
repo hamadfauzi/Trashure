@@ -7,7 +7,6 @@
     android:background="@color/colorBackground"
     tools:context=".MainActivity">
 
-
     <android.support.design.widget.BottomNavigationView
         app:itemIconTint="@drawable/bottom_selector"
         android:id="@+id/bottomNavBar"

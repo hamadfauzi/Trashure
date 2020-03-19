@@ -1,11 +1,6 @@
 package com.example.trashure.Feature.Penukaran;
 
 import android.os.Bundle;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,8 +8,14 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.RelativeLayout;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.trashure.R;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class NominalFragment extends Fragment {
 

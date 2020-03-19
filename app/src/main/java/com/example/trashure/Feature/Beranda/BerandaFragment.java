@@ -179,7 +179,7 @@ public class BerandaFragment extends Fragment{
             }
         });
 
-        setoranRefs.limitToLast(4).addValueEventListener(new ValueEventListener() {
+        setoranRefs.limitToLast(3).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if (dataSnapshot.getChildrenCount()!=0){

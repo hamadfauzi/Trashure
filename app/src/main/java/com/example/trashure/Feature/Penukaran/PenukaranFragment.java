@@ -6,10 +6,6 @@ import android.graphics.ColorMatrixColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.Spanned;
@@ -28,8 +24,13 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.example.trashure.R;
 import com.github.aakira.expandablelayout.ExpandableRelativeLayout;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -206,7 +207,7 @@ public class PenukaranFragment extends Fragment {
             }
         });
 
-        harga = pemisah(harga);
+        //harga = pemisah(harga);
 
         btnTukar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -223,11 +224,11 @@ public class PenukaranFragment extends Fragment {
                         et_phoneNumber.setTextColor(getResources().getColor(R.color.red));
                         tv_alert.setVisibility(View.VISIBLE);
                     }else{
-                        if(Integer.valueOf(mySaldo)<Integer.valueOf(harga)){
+                        /*if(Integer.valueOf(mySaldo)<Integer.valueOf(harga)){
                             Toast.makeText(getActivity(), "Saldo anda tidak cukup!", Toast.LENGTH_SHORT).show();
-                        }else{
+                        }else{*/
                             konfTukar();
-                    }
+                    //}
                 }
             }
         });

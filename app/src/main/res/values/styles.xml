@@ -10,6 +10,7 @@
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:textViewStyle">@style/SFTextViewStyle</item>
         <item name="buttonStyle">@style/SFButtonStyle</item>
+        <item name="editTextStyle">@style/SFEditTextStyle</item>
     </style>
 
     <style name="CustomViewAllTab" parent="@android:style/TextAppearance.Widget.TabWidget">
